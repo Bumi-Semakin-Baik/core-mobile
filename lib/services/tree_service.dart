@@ -1,0 +1,44 @@
+import 'dart:convert';
+
+import 'package:bumibaik_app/models/news_model.dart';
+import 'package:bumibaik_app/resources/app_constants.dart';
+import 'package:http/http.dart' as http;
+
+import '../resources/token.dart';
+
+class TreeService {
+  String treeUrl = "${AppConstants.apiUrl}/trees";
+
+  Future<List<NewsModel>> getNews() async {
+    String url = treeUrl;
+
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Cache-control': 'no-cache',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $globalAccessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body)['data'];
+        List<NewsModel> newsData = [];
+
+        for (var item in data) {
+          newsData.add(NewsModel.fromJson(item));
+        }
+
+        return newsData;
+      } else {
+        print(response.statusCode);
+        throw Exception("ehe");
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+}

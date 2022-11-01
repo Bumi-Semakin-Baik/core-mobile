@@ -1,8 +1,16 @@
 import 'dart:async';
 
+import 'package:bumibaik_app/resources/token.dart';
 import 'package:bumibaik_app/screens/auth/login.dart';
 import 'package:bumibaik_app/screens/menu/dashboard.dart';
+import 'package:bumibaik_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'common/common_dialog_widget.dart';
+import 'common/common_method.dart';
+import 'models/auth_response_model.dart';
+import 'models/user_model.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({Key? key}) : super(key: key);
@@ -31,17 +39,89 @@ class _SplashscreenState extends State<Splashscreen> {
     super.dispose();
   }
 
-  _goNext() {
+  Future<bool> _checkUserLoginStatus() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    var prefs = await SharedPreferences.getInstance();
+    return prefs.getBool("loginStatus") ?? false;
+  }
+
+  _goNext() async {
+    if (await _checkUserLoginStatus()) {
+      var prefs = await SharedPreferences.getInstance();
+
+      String? email = prefs.getString("email");
+      String? password = prefs.getString("password");
+
+      Map<String, dynamic> data = {
+        'user': email,
+        'password': password,
+      };
+
+      try {
+        AuthResponseModel? res = await AuthService().login(data);
+
+        UserModel? user = res.user!;
+
+        CommonMethod().saveUserLoginsDetails(
+          user.id!,
+          user.name!,
+          user.email!,
+          password!,
+          res.accessToken!,
+          true,
+        );
+
+        globalAccessToken = res.accessToken!;
+
+        setState(() {});
+
+        _goToPage(Dashboard());
+      } catch (e) {
+        buildError(e);
+      }
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (ctx) => Login(),
+        ),
+      );
+    }
+  }
+
+  buildError(var e) {
+    CommonDialogWidget.buildOkDialog(context, false, e.toString());
+  }
+
+  _goToPage(Widget name) {
     Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (ctx) => Dashboard(),
-      ),
-    );
+        context,
+        MaterialPageRoute(
+          builder: (context) => name,
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * 0.15),
+            Image(
+              width: MediaQuery.of(context).size.width * 0.8,
+              image: const AssetImage('assets/images/logo_nama.png'),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+            Text(
+              "v 0.0.1",
+              style: Theme.of(context).textTheme.caption,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

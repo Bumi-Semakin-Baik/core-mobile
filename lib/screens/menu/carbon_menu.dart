@@ -10,6 +10,12 @@ class CarbonMenu extends StatefulWidget {
 class _CarbonMenuState extends State<CarbonMenu> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [],
+        ),
+      ),
+    );
   }
 }

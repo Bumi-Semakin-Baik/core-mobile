@@ -4,14 +4,21 @@ import 'package:bumibaik_app/models/news_model.dart';
 import 'package:bumibaik_app/resources/app_constants.dart';
 import 'package:http/http.dart' as http;
 
+import '../resources/token.dart';
+
 class NewsService {
+  String newsUrl = "${AppConstants.apiUrl}/news";
   Future<List<NewsModel>> getNews() async {
+    String url = newsUrl;
+
     try {
       final response = await http.get(
-        Uri.parse("${AppConstants.apiUrl}news"),
+        Uri.parse(url),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'Cache-control': 'no-cache',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $globalAccessToken',
         },
       );
 
@@ -22,8 +29,6 @@ class NewsService {
         for (var item in data) {
           newsData.add(NewsModel.fromJson(item));
         }
-
-        print(newsData);
 
         return newsData;
       } else {

@@ -84,9 +84,9 @@ class _DashboardState extends State<Dashboard> {
             ? 10
             : kBottomNavigationBarHeight,
         hideNavigationBarWhenKeyboardShows: true,
-        margin: const EdgeInsets.all(10),
+        //margin: const EdgeInsets.all(10),
         popActionScreens: PopActionScreensType.all,
-        bottomScreenMargin: 0.0,
+        bottomScreenMargin: 0,
         // onWillPop: (context) async {
         //   await showDialog(
         //     context: context!,

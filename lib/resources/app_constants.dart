@@ -1,3 +1,3 @@
 class AppConstants {
-  static String apiUrl = "https://bumibaik.com/api/";
+  static String apiUrl = "https://bumibaik.com/api";
 }
