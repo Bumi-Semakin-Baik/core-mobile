@@ -15,18 +15,24 @@ class ProductAdoptModel {
     this.name,
     this.location,
     this.images,
+    this.detail,
+    this.quota,
   });
 
   int? id;
   String? name;
   String? location;
   List<String>? images;
+  int? quota;
+  String? detail;
 
   factory ProductAdoptModel.fromJson(Map<String, dynamic> json) =>
       ProductAdoptModel(
         id: json["id"],
         name: json["name"],
         location: json["location"],
+        quota: json["quota"],
+        detail: json["detail"],
         images: List<String>.from(json["images"].map((x) => x)),
       );
 

@@ -16,6 +16,8 @@ class NewsModel {
     this.image,
     this.createdAt,
     this.views,
+    this.author,
+    this.content,
   });
 
   int? id;
@@ -24,12 +26,16 @@ class NewsModel {
   String? image;
   DateTime? createdAt;
   int? views;
+  String? content;
+  String? author;
 
   factory NewsModel.fromJson(Map<String, dynamic> json) => NewsModel(
         id: json["id"],
         title: json["title"],
         slug: json["slug"],
         image: json["image"],
+        author: json["author"],
+        content: json["content"],
         createdAt: DateTime.parse(json["created_at"]),
         views: json["views"],
       );

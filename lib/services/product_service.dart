@@ -14,6 +14,8 @@ class ProductService {
   Future<List<ProductAdoptModel>> getProductAdopt() async {
     String url = "$productUrl/adopt";
 
+    print(url);
+
     try {
       final response = await http.get(
         Uri.parse(url),
@@ -47,6 +49,8 @@ class ProductService {
   Future<List<ProductPlantingModel>> getProductPlanting() async {
     String url = "$productUrl/planting";
 
+    print(url);
+
     try {
       final response = await http.get(
         Uri.parse(url),
@@ -67,6 +71,66 @@ class ProductService {
         }
 
         return newsData;
+      } else {
+        print(response.statusCode);
+        throw Exception("ehe");
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Future<ProductAdoptModel> getProductAdoptDetail(int id) async {
+    String url = "$productUrl/adopt/$id";
+
+    print(url);
+
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Cache-control': 'no-cache',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $globalAccessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body)['data'];
+
+        return ProductAdoptModel.fromJson(data);
+      } else {
+        print(response.statusCode);
+        throw Exception("ehe");
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Future<ProductPlantingModel> getProductPlantingDetail(int id) async {
+    String url = "$productUrl/planting/$id";
+
+    print(url);
+
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Cache-control': 'no-cache',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $globalAccessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body)['data'];
+
+        return ProductPlantingModel.fromJson(data);
       } else {
         print(response.statusCode);
         throw Exception("ehe");

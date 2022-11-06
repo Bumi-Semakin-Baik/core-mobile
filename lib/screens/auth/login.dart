@@ -255,7 +255,9 @@ class _LoginState extends State<Login> {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => Dashboard(),
+            builder: (context) => Dashboard(
+              userModel: user,
+            ),
           ));
     } catch (e) {
       CommonDialogWidget.buildOkDialog(context, false, e.toString());

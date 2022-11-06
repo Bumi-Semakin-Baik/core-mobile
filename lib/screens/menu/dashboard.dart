@@ -1,3 +1,4 @@
+import 'package:bumibaik_app/models/user_model.dart';
 import 'package:bumibaik_app/screens/menu/carbon_menu.dart';
 import 'package:bumibaik_app/screens/menu/home_menu.dart';
 import 'package:bumibaik_app/screens/menu/news_menu.dart';
@@ -10,7 +11,8 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import '../../resources/color_manager.dart';
 
 class Dashboard extends StatefulWidget {
-  Dashboard({Key? key}) : super(key: key);
+  UserModel userModel;
+  Dashboard({required this.userModel, Key? key}) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -29,11 +31,11 @@ class _DashboardState extends State<Dashboard> {
 
   List<Widget> _buildScreens() {
     return [
-      HomeMenu(),
+      HomeMenu(userModel: widget.userModel),
       NewsMenu(),
       ScanMenu(),
       CarbonMenu(),
-      ProfileMenu(),
+      ProfileMenu(userModel: widget.userModel),
     ];
   }
 
@@ -81,12 +83,12 @@ class _DashboardState extends State<Dashboard> {
         resizeToAvoidBottomInset: true,
         stateManagement: true,
         navBarHeight: MediaQuery.of(context).viewInsets.bottom > 0
-            ? 10
+            ? 20
             : kBottomNavigationBarHeight,
         hideNavigationBarWhenKeyboardShows: true,
-        //margin: const EdgeInsets.all(10),
+        padding: const NavBarPadding.only(top: 15),
         popActionScreens: PopActionScreensType.all,
-        bottomScreenMargin: 0,
+        bottomScreenMargin: 20,
         // onWillPop: (context) async {
         //   await showDialog(
         //     context: context!,

@@ -75,7 +75,7 @@ class _SplashscreenState extends State<Splashscreen> {
 
         setState(() {});
 
-        _goToPage(Dashboard());
+        _goToPage(Dashboard(userModel: user));
       } catch (e) {
         buildError(e);
       }

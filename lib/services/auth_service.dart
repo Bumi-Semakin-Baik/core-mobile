@@ -8,9 +8,6 @@ import '../resources/app_constants.dart';
 
 class AuthService {
   String authUrl = "${AppConstants.apiUrl}/auth";
-  // Future<UserModel> login() {
-  //   return null;
-  // }
 
   Future<AuthResponseModel> register(Map<String, dynamic> data) async {
     String url = "$authUrl/register";

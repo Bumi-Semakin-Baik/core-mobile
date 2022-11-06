@@ -103,12 +103,12 @@ class _Calculate2State extends State<Calculate2> {
 
                                   //   loginUser();
                                   // }
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Dashboard(),
-                                    ),
-                                  );
+                                  // Navigator.pushReplacement(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => Dashboard(),
+                                  //   ),
+                                  // );
                                 },
                               ),
                             ),

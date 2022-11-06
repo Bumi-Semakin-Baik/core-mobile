@@ -12,6 +12,8 @@ class TreeService {
   Future<List<NewsModel>> getNews() async {
     String url = treeUrl;
 
+    print(url);
+
     try {
       final response = await http.get(
         Uri.parse(url),

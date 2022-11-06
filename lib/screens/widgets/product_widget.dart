@@ -1,9 +1,15 @@
+import 'package:bumibaik_app/common/common_widget.dart';
 import 'package:bumibaik_app/models/news_model.dart';
 import 'package:bumibaik_app/models/product_adopt_model.dart';
+import 'package:bumibaik_app/resources/color_manager.dart';
+import 'package:bumibaik_app/screens/tree_planting/tree_planting_detail.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../models/product_planting_model.dart';
+import '../tree_adopt/tree_adopt_detail.dart';
 
 class ProductWidget extends StatefulWidget {
   ProductAdoptModel? adoptModel;
@@ -36,23 +42,34 @@ class _ProductWidgetState extends State<ProductWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        isAdopt
+            ? CommonWidget().movePage(
+                context,
+                TreeAdoptDetail(
+                  productAdoptModel: widget.adoptModel!,
+                ),
+              )
+            : CommonWidget().movePage(
+                context,
+                TreePlantingDetail(
+                  productPlantingModel: widget.plantingModel!,
+                ),
+              );
+      },
       child: Card(
         elevation: 1.0,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // SizedBox(
-            //   height: 200.0,
-            //   child: Ink.image(
-            //     image: NetworkImage(package.imageUrl1!),
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.3,
-              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.13,
+              width: MediaQuery.of(context).size.width * 0.4,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
                 child: FancyShimmerImage(
                   boxFit: BoxFit.cover,
                   imageUrl: isAdopt
@@ -64,27 +81,48 @@ class _ProductWidgetState extends State<ProductWidget> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.all(16.0),
-              alignment: Alignment.centerLeft,
+              width: MediaQuery.of(context).size.width * 0.4,
+              padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     isAdopt
                         ? widget.adoptModel!.name!
                         : widget.plantingModel!.name!,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
                     style: Theme.of(context).textTheme.headline6?.copyWith(
                           color: Colors.black,
+                          fontSize: 18,
                         ),
                   ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "Disediakan oleh ",
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                          color: Colors.black,
-                        ),
+                  const SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      isAdopt
+                          ? Icon(
+                              Icons.location_pin,
+                              color: ColorManager.blue,
+                            )
+                          : Icon(
+                              Icons.calendar_month,
+                              color: ColorManager.blue,
+                            ),
+                      Text(
+                        isAdopt
+                            ? widget.adoptModel!.location!
+                            : DateFormat.yMMMMd('id_ID')
+                                .format(widget.plantingModel!.datePlanting!),
+                        style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                              color: ColorManager.blue,
+                            ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 10),
                 ],
               ),
             ),

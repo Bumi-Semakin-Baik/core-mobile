@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:bumibaik_app/models/tree_model.dart';
+
 ProductPlantingModel productPlantModelFromJson(String str) =>
     ProductPlantingModel.fromJson(json.decode(str));
 
@@ -16,17 +18,29 @@ class ProductPlantingModel {
     this.name,
     this.datePlanting,
     this.images,
+    this.detail,
+    this.tree,
+    this.price,
+    this.location,
   });
 
   int? id;
   String? name;
   DateTime? datePlanting;
   List<String>? images;
+  String? detail;
+  TreeModel? tree;
+  String? location;
+  int? price;
 
   factory ProductPlantingModel.fromJson(Map<String, dynamic> json) =>
       ProductPlantingModel(
         id: json["id"],
         name: json["name"],
+        detail: json["detail"],
+        location: json["location"],
+        price: json["price"],
+        tree: TreeModel.fromJson(json["tree"]),
         datePlanting: DateTime.parse(json["date_planting"]),
         images: List<String>.from(json["images"].map((x) => x)),
       );

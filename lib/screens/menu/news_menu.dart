@@ -1,8 +1,11 @@
 import 'package:bumibaik_app/resources/color_manager.dart';
 import 'package:bumibaik_app/screens/widgets/news_widget.dart';
 import 'package:bumibaik_app/services/news_service.dart';
+import 'package:carousel_slider/carousel_controller.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../../common/common_shimmer_widget.dart';
 import '../../models/news_model.dart';
 
 class NewsMenu extends StatefulWidget {
@@ -32,73 +35,155 @@ class _NewsMenuState extends State<NewsMenu> {
 
   @override
   Widget build(BuildContext context) {
+    int _current = 0;
+    final CarouselController _controller = CarouselController();
+
+    final List<Widget> imageSliders = news == null
+        ? []
+        : news!
+            .getRange(0, 4)
+            .map((item) => Container(
+                  margin: const EdgeInsets.all(5.0),
+                  child: ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      child: Stack(
+                        children: <Widget>[
+                          Image.network(item.image!,
+                              fit: BoxFit.cover, width: 1000.0),
+                          Positioned(
+                            bottom: 0.0,
+                            left: 0.0,
+                            right: 0.0,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color.fromARGB(200, 0, 0, 0),
+                                    Color.fromARGB(0, 0, 0, 0)
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                ),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 20.0, horizontal: 20.0),
+                              child: Text(
+                                //'No. ${imgList.indexOf(item)} image',
+                                item.title!,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )),
+                ))
+            .toList();
+
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      appBar: AppBar(
+        elevation: 0,
+        toolbarHeight: MediaQuery.of(context).size.height * 0.42,
+        backgroundColor: Colors.white,
+        flexibleSpace: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Berita dan Blog',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'Berita dan Blog',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              //buildSliderShow(),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-
-              buildNewsList(),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              imageSliders.isEmpty
+                  ? Container()
+                  : buildSliderShow(imageSliders),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Berita & Blog lainnya',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.007),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      height: MediaQuery.of(context).size.height * 0.01,
+                      color: ColorManager.blue,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+            child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          child: news == null
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.42,
+                  child: CommonShimmerWidget().buildNewsItemShimmer(context),
+                )
+              : buildNewsList(),
         )),
       ),
     );
   }
 
-  buildSliderShow() {}
+  buildSliderShow(List<Widget> imageSliders) {
+    return CarouselSlider(
+      options: CarouselOptions(
+        autoPlay: true,
+        aspectRatio: 2.0,
+        enlargeCenterPage: true,
+        enlargeStrategy: CenterPageEnlargeStrategy.height,
+      ),
+      items: imageSliders,
+    );
+  }
 
   buildNewsList() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Berita & Blog lainnya',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+        ListView(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            ListView.builder(
+              primary: false,
+              shrinkWrap: true,
+              itemCount: news!.length,
+              itemBuilder: (context, index) {
+                return NewsWidget(
+                  news: news![index],
+                );
+              },
+            )
+          ],
         ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.007),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.6,
-          height: MediaQuery.of(context).size.height * 0.01,
-          color: ColorManager.darkPrimary,
-        ),
-        SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-        news == null
-            ? CircularProgressIndicator()
-            : ListView(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  ListView.builder(
-                    primary: false,
-                    shrinkWrap: true,
-                    itemCount: news!.length,
-                    itemBuilder: (context, index) {
-                      return NewsWidget(
-                        news: news![index],
-                      );
-                    },
-                  )
-                ],
-              ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.1),
       ],
     );

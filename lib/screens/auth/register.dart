@@ -1,6 +1,7 @@
 import 'package:bumibaik_app/common/common_dialog_widget.dart';
 import 'package:bumibaik_app/common/common_method.dart';
 import 'package:bumibaik_app/models/auth_response_model.dart';
+import 'package:bumibaik_app/screens/auth/login.dart';
 import 'package:bumibaik_app/screens/calculate_carbon/calculate_1.dart';
 import 'package:bumibaik_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -281,7 +282,14 @@ class _DaftarState extends State<Register> {
                         children: [
                           const Text('Sudah punya akun?'),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Login(),
+                                ),
+                              );
+                            },
                             child: Text(
                               "Masuk",
                               style: TextStyle(color: ColorManager.primary),
