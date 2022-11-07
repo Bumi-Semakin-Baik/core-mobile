@@ -125,7 +125,7 @@ class _ScanMenuState extends State<ScanMenu> {
                         ),
                         const SizedBox(height: 30),
                         Text(
-                          "Booking information matches the door.",
+                          "Pohon Terdeteksi",
                           textAlign: TextAlign.center,
                           style: Theme.of(context)
                               .textTheme
@@ -152,7 +152,7 @@ class _ScanMenuState extends State<ScanMenu> {
                       width: 213,
                       height: 55,
                       child: OutlinedButton(
-                        child: const Text('Open door'),
+                        child: const Text('Lihat Detail'),
                         style: OutlinedButton.styleFrom(
                             backgroundColor: ColorManager.primary),
                         onPressed: () {

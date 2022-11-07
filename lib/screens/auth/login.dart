@@ -244,12 +244,9 @@ class _LoginState extends State<Login> {
         true,
       );
 
-      globalAccessToken = res.accessToken!;
-
-      setState(() {});
-
       setState(() {
         isLoading = false;
+        globalAccessToken = res.accessToken!;
       });
 
       Navigator.pushReplacement(

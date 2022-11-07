@@ -27,7 +27,7 @@ class CarbonService {
           'Accept': 'application/json',
           'Authorization': 'Bearer $globalAccessToken',
         },
-        body: jsonEncode(<String, String>{
+        body: jsonEncode(<String, int>{
           "user_id": data['user_id'],
           "fuel": data['fuel'],
           "fuel_type": data['fuel_type'],

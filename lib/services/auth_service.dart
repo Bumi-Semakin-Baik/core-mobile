@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bumibaik_app/models/complete_user_model.dart';
 import 'package:bumibaik_app/models/auth_response_model.dart';
+import 'package:bumibaik_app/models/register_validation_model.dart';
 import 'package:http/http.dart' as http;
 
 import '../resources/app_constants.dart';
@@ -33,7 +34,9 @@ class AuthService {
         var result = json.decode(response.body)['data'];
         return AuthResponseModel.fromJson(result);
       } else {
-        throw json.decode(response.body)['message'];
+        throw RegisterValidationModel.fromJson(
+          json.decode(response.body)['validation_error'],
+        );
       }
     } catch (e) {
       rethrow;
@@ -61,7 +64,9 @@ class AuthService {
         var result = json.decode(response.body)['data'];
         return AuthResponseModel.fromJson(result);
       } else {
-        throw json.decode(response.body)['message'];
+        throw RegisterValidationModel.fromJson(
+          json.decode(response.body)['validation_error'],
+        );
       }
     } catch (e) {
       rethrow;

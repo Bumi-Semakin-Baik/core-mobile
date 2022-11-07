@@ -1,13 +1,21 @@
+import 'dart:math';
+
+import 'package:bumibaik_app/common/common_dialog_widget.dart';
 import 'package:bumibaik_app/models/carbon_calculation_result_model.dart';
 import 'package:bumibaik_app/models/carbon_calculator_type_model.dart';
+import 'package:bumibaik_app/models/user_model.dart';
 import 'package:bumibaik_app/resources/color_manager.dart';
 import 'package:bumibaik_app/screens/calculate_carbon/calculate_2.dart';
 import 'package:bumibaik_app/services/carbon_service.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../models/carbon_calculator_type_item_model.dart';
 
 class Calculate1 extends StatefulWidget {
-  Calculate1({Key? key}) : super(key: key);
+  UserModel userModel;
+  Calculate1({required this.userModel, Key? key}) : super(key: key);
 
   @override
   State<Calculate1> createState() => _Calculate1State();
@@ -22,30 +30,83 @@ class _Calculate1State extends State<Calculate1> {
     RequiredValidator(errorText: 'Harap isi data ini'),
   ]);
 
-  List<String>? fuelType;
-  List<String>? electricityType;
-  List<String>? gasType;
+  final _formKey = GlobalKey<FormState>();
 
-  String? defaultBBm = 'Pertalite';
+  String? defaultFuel = "Solar";
+  String? defaultElectricity = "Subsidi";
+  String? defaultGas = "Subsidi";
+
+  CarbonCalculatorTypeModel? result;
+
+  int? selectedFuelId;
+  int? selectedElectricityId;
+  int? selectedGasId;
 
   bool isLoading = false;
 
+  List<CarbonCalculatorTypeItemModel> fuelList = [
+    CarbonCalculatorTypeItemModel(id: 1, name: "Solar"),
+    CarbonCalculatorTypeItemModel(id: 2, name: "Pertalite"),
+    CarbonCalculatorTypeItemModel(id: 3, name: "Pertamax"),
+    CarbonCalculatorTypeItemModel(id: 4, name: "Pertamax Turbo"),
+    CarbonCalculatorTypeItemModel(id: 5, name: "Dexlite"),
+    CarbonCalculatorTypeItemModel(id: 6, name: "Pertamina Dex"),
+  ];
+
+  List<CarbonCalculatorTypeItemModel> electrycityList = [
+    CarbonCalculatorTypeItemModel(id: 7, name: "Subsidi"),
+    CarbonCalculatorTypeItemModel(id: 8, name: "Non Subsidi"),
+  ];
+
+  List<CarbonCalculatorTypeItemModel> gasList = [
+    CarbonCalculatorTypeItemModel(id: 9, name: "Subsidi"),
+    CarbonCalculatorTypeItemModel(id: 10, name: "Non Subsidi"),
+  ];
+
   @override
   void initState() {
-    getTypeValues();
-
     super.initState();
+
+    getTypeValues();
   }
 
   getTypeValues() async {
     try {
-      CarbonCalculatorTypeModel res = await CarbonService().getCalculatorType();
+      result = await CarbonService().getCalculatorType();
 
-      //fuelType!.add(res!.fuel!.);
+      print(result!.fuel!.length);
+
+      setState(() {});
+
+      //await setData(res);
+
+      // fuelTypes.addAll(res.fuel!);
+
+      print("sini");
+      // electricityTypes!.addAll(res.electricity!);
+      // gasTypes!.addAll(res.gas!);
+
+      // if (res != null) {
+
+      //   setState(() {});
+      // } else {
+      //   print("kosong");
+      // }
     } catch (e) {
-      print(e);
+      print("@@@" + e.toString());
     }
   }
+
+  // setData(CarbonCalculatorTypeModel c) {
+  //   for (int i = 0; i < c.fuel!.length; i++) {
+  //     print(c.fuel![i].name);
+  //     setState(() {
+  //       if (c.fuel![i] != null) {
+  //         fuelTypes.add(c.fuel![i] as CarbonCalculatorTypeItemModel);
+  //       }
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -93,139 +154,232 @@ class _Calculate1State extends State<Calculate1> {
                       topRight: Radius.circular(25.0),
                     ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 30, horizontal: 30),
-                    child: Column(
-                      children: [
-                        const Text(
-                            "Masukan nominal rupiah sesuai penggunana rata-rata bulanan kamu"),
-                        const SizedBox(height: 20),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                controller: bbmController,
-                                validator: _valueValidator,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  border: const OutlineInputBorder(),
-                                  hintText: 'BBM',
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
+                  child: Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 30, horizontal: 30),
+                      child: Column(
+                        children: [
+                          const Text(
+                              "Masukan nominal rupiah sesuai penggunaan rata-rata bulanan kamu"),
+                          const SizedBox(height: 20),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: bbmController,
+                                  validator: _valueValidator,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    border: const OutlineInputBorder(),
+                                    hintText: 'BBM',
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: ColorManager.primary,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.03),
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.075,
+                                padding: const EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: ColorManager.grey,
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: DropdownButton(
+                                    hint: const Text("Pilih data"),
+                                    icon: Icon(
+                                      Icons.arrow_drop_down,
                                       color: ColorManager.primary,
                                     ),
+                                    underline: const SizedBox(),
+                                    items: fuelList.map((item) {
+                                      return DropdownMenuItem(
+                                        value: item.id,
+                                        child: Text(item.name!),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      setState(
+                                        () {
+                                          selectedFuelId = value as int;
+                                        },
+                                      );
+                                    },
+                                    value: selectedFuelId,
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                                width:
-                                    MediaQuery.of(context).size.width * 0.03),
-                            Container(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.075,
-                              padding: const EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: ColorManager.grey,
-                                ),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: DropdownButton<String>(
-                                      iconSize: 0.0,
-                                      underline: const SizedBox(),
-                                      value: defaultBBm,
-                                      items: <String>[
-                                        'Hourly',
-                                        'Daily',
-                                        'Weekly',
-                                        'Monthly',
-                                        'Yearly',
-                                      ].map<DropdownMenuItem<String>>(
-                                          (String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (String? value) {
-                                        setState(
-                                          () {
-                                            defaultBBm = value;
-                                            // selectedTypeOfBooking = value;
-                                            // _avaiBookingOptions = [];
-                                            // _availableBookings = null;
-                                          },
-                                        );
-                                      },
-                                      // icon: Icon(
-                                      //   Icons.arrow_drop_down,
-                                      //   color: Colors.black,
-                                      // ),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_drop_down,
-                                    color: ColorManager.primary,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.3),
-                        SizedBox(
-                          height: 50,
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  ColorManager.primary, // background
-                              foregroundColor: Colors.white, // foreground
-                            ),
-                            child: isLoading
-                                ? const Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                : const Text('HITUNG'),
-                            onPressed: () async {
-                              // if (_formKey.currentState!.validate()) {
-                              //   setState(() {
-                              //     isLoading = true;
-                              //   });
-
-                              //   loginUser();
-                              // }
-                              CarbonCalculationResultModel res =
-                                  CarbonCalculationResultModel(
-                                unit: "Kg",
-                                result: 1888,
-                              );
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Calculate2(
-                                    result: res,
-                                  ),
-                                ),
-                              );
-                            },
+                            ],
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 20),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: listrikController,
+                                  validator: _valueValidator,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    border: const OutlineInputBorder(),
+                                    hintText: 'Listrik',
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: ColorManager.primary,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.03),
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.075,
+                                padding: const EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: ColorManager.grey,
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: DropdownButton(
+                                    underline: const SizedBox(),
+                                    hint: const Text("Pilih data"),
+                                    icon: Icon(
+                                      Icons.arrow_drop_down,
+                                      color: ColorManager.primary,
+                                    ),
+                                    items: electrycityList.map((item) {
+                                      return DropdownMenuItem(
+                                        value: item.id,
+                                        child: Text(item.name!),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      setState(
+                                        () {
+                                          selectedElectricityId = value as int;
+                                        },
+                                      );
+                                    },
+                                    value: selectedElectricityId,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  controller: gasController,
+                                  validator: _valueValidator,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                    border: const OutlineInputBorder(),
+                                    hintText: 'Gas',
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: ColorManager.primary,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.03),
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.075,
+                                padding: const EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: ColorManager.grey,
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: DropdownButton(
+                                    hint: const Text("Pilih data"),
+                                    icon: Icon(
+                                      Icons.arrow_drop_down,
+                                      color: ColorManager.primary,
+                                    ),
+                                    underline: const SizedBox(),
+                                    items: gasList.map((item) {
+                                      return DropdownMenuItem(
+                                        value: item.id,
+                                        child: Text(item.name!),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      setState(
+                                        () {
+                                          selectedGasId = value as int;
+                                        },
+                                      );
+                                    },
+                                    value: selectedGasId,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 30),
+                          SizedBox(
+                            height: 50,
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    ColorManager.primary, // background
+                                foregroundColor: Colors.white, // foreground
+                              ),
+                              child: isLoading
+                                  ? const Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : const Text('HITUNG'),
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+
+                                  saveHitungKarbon();
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -235,5 +389,42 @@ class _Calculate1State extends State<Calculate1> {
         ),
       ),
     );
+  }
+
+  saveHitungKarbon() async {
+    var prefs = await SharedPreferences.getInstance();
+
+    int? id = prefs.getInt("id");
+
+    Map<String, dynamic> data = {
+      'user_id': id,
+      "fuel": int.parse(bbmController.text.trim()),
+      "fuel_type": selectedFuelId,
+      "electricity": int.parse(listrikController.text.trim()),
+      "electricity_type": selectedElectricityId,
+      "gas": int.parse(gasController.text.trim()),
+      "gas_type": selectedGasId,
+    };
+
+    try {
+      CarbonCalculationResultModel? res =
+          await CarbonService().calculateCarbon(data);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Calculate2(
+            result: res,
+            userModel: widget.userModel,
+          ),
+        ),
+      );
+    } catch (e) {
+      CommonDialogWidget.buildOkDialog(context, false, "Error: $e");
+
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 }

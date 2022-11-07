@@ -1,26 +1,29 @@
 import 'package:bumibaik_app/common/common_widget.dart';
 import 'package:bumibaik_app/models/product_adopt_model.dart';
+import 'package:bumibaik_app/models/product_planting_model.dart';
 import 'package:bumibaik_app/screens/tree_adopt/tree_adopt_detail.dart';
+import 'package:bumibaik_app/screens/tree_planting/tree_planting_detail.dart';
 import 'package:bumibaik_app/screens/widgets/product_widget.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
+import 'package:intl/intl.dart';
 
 import '../../resources/color_manager.dart';
 
-class TreeAdoptList extends StatefulWidget {
-  List<ProductAdoptModel> adoptList;
-  TreeAdoptList({required this.adoptList, Key? key}) : super(key: key);
+class TreePlantingList extends StatefulWidget {
+  List<ProductPlantingModel> plantingList;
+  TreePlantingList({required this.plantingList, Key? key}) : super(key: key);
 
   @override
-  State<TreeAdoptList> createState() => _TreeAdoptListState();
+  State<TreePlantingList> createState() => _TreePlantingListState();
 }
 
-class _TreeAdoptListState extends State<TreeAdoptList> {
+class _TreePlantingListState extends State<TreePlantingList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CommonWidget.buildCommonAppbar(context, "Daftar Adopsi Pohon"),
+      appBar: CommonWidget.buildCommonAppbar(context, "Daftar Tanam Pohon"),
       body: ResponsiveGridList(
         listViewBuilderOptions: ListViewBuilderOptions(shrinkWrap: true),
         minItemsPerRow: 2,
@@ -30,13 +33,13 @@ class _TreeAdoptListState extends State<TreeAdoptList> {
         horizontalGridMargin: 10,
         verticalGridMargin: 10,
         children: List.generate(
-          widget.adoptList.length,
+          widget.plantingList.length,
           (index) => GestureDetector(
             onTap: () {
               CommonWidget().movePage(
                 context,
-                TreeAdoptDetail(
-                  productAdoptModel: widget.adoptList[index],
+                TreePlantingDetail(
+                  productPlantingModel: widget.plantingList[index],
                 ),
               );
             },
@@ -55,7 +58,7 @@ class _TreeAdoptListState extends State<TreeAdoptList> {
                           topRight: Radius.circular(10)),
                       child: FancyShimmerImage(
                         boxFit: BoxFit.cover,
-                        imageUrl: widget.adoptList[index].images![0],
+                        imageUrl: widget.plantingList[index].images![0],
                         errorWidget: Image.network(
                             'https://i0.wp.com/www.dobitaobyte.com.br/wp-content/uploads/2016/02/no_image.png?ssl=1'),
                       ),
@@ -70,7 +73,7 @@ class _TreeAdoptListState extends State<TreeAdoptList> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          widget.adoptList[index].name!,
+                          widget.plantingList[index].name!,
                           overflow: TextOverflow.ellipsis,
                           softWrap: true,
                           style:
@@ -85,11 +88,12 @@ class _TreeAdoptListState extends State<TreeAdoptList> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.location_pin,
+                              Icons.calendar_month,
                               color: ColorManager.blue,
                             ),
                             Text(
-                              widget.adoptList[index].location!,
+                              DateFormat.yMMMMd('id_ID').format(
+                                  widget.plantingList[index].datePlanting!),
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText2

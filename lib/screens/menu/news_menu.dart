@@ -3,10 +3,13 @@ import 'package:bumibaik_app/screens/widgets/news_widget.dart';
 import 'package:bumibaik_app/services/news_service.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/common_shimmer_widget.dart';
+import '../../common/common_widget.dart';
 import '../../models/news_model.dart';
+import '../details/news_detail.dart';
 
 class NewsMenu extends StatefulWidget {
   NewsMenu({Key? key}) : super(key: key);
@@ -28,8 +31,6 @@ class _NewsMenuState extends State<NewsMenu> {
   getNewsData() async {
     news = await NewsService().getNews();
 
-    print(news);
-
     setState(() {});
   }
 
@@ -42,45 +43,66 @@ class _NewsMenuState extends State<NewsMenu> {
         ? []
         : news!
             .getRange(0, 4)
-            .map((item) => Container(
+            .map(
+              (item) => InkWell(
+                onTap: () {
+                  CommonWidget().movePage(
+                    context,
+                    NewsDetail(
+                      news: item,
+                    ),
+                  );
+                },
+                child: Container(
                   margin: const EdgeInsets.all(5.0),
                   child: ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      child: Stack(
-                        children: <Widget>[
-                          Image.network(item.image!,
-                              fit: BoxFit.cover, width: 1000.0),
-                          Positioned(
-                            bottom: 0.0,
-                            left: 0.0,
-                            right: 0.0,
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Color.fromARGB(200, 0, 0, 0),
-                                    Color.fromARGB(0, 0, 0, 0)
-                                  ],
-                                  begin: Alignment.bottomCenter,
-                                  end: Alignment.topCenter,
-                                ),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    child: Stack(
+                      children: <Widget>[
+                        // Image.network(item.image!,
+                        //     fit: BoxFit.cover, width: 1000.0),
+                        FancyShimmerImage(
+                          boxDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          boxFit: BoxFit.cover,
+                          imageUrl: item.image!,
+                          errorWidget: Image.network(
+                              'https://i0.wp.com/www.dobitaobyte.com.br/wp-content/uploads/2016/02/no_image.png?ssl=1'),
+                        ),
+                        Positioned(
+                          bottom: 0.0,
+                          left: 0.0,
+                          right: 0.0,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color.fromARGB(200, 0, 0, 0),
+                                  Color.fromARGB(0, 0, 0, 0)
+                                ],
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
                               ),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 20.0, horizontal: 20.0),
-                              child: Text(
-                                //'No. ${imgList.indexOf(item)} image',
-                                item.title!,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 20.0),
+                            child: Text(
+                              item.title!,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 17.0,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                        ],
-                      )),
-                ))
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )
             .toList();
 
     return Scaffold(

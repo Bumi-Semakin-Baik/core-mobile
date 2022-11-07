@@ -2,11 +2,14 @@ import 'package:bumibaik_app/models/carbon_calculation_result_model.dart';
 import 'package:bumibaik_app/screens/menu/dashboard.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/user_model.dart';
 import '../../resources/color_manager.dart';
 
 class Calculate2 extends StatefulWidget {
   CarbonCalculationResultModel result;
-  Calculate2({required this.result, Key? key}) : super(key: key);
+  UserModel userModel;
+  Calculate2({required this.userModel, required this.result, Key? key})
+      : super(key: key);
 
   @override
   State<Calculate2> createState() => _Calculate2State();
@@ -27,31 +30,32 @@ class _Calculate2State extends State<Calculate2> {
                 top: 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.25,
                   color: ColorManager.primary,
                   child: Center(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        '${widget.result.result} ${widget.result.unit}',
-                        softWrap: true,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 50),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'adalah estimasi emisi karbonmu!',
-                        softWrap: true,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                    ],
-                  )),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${widget.result.result} ${widget.result.unit}',
+                          softWrap: true,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 50),
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'adalah estimasi emisi karbonmu!',
+                          softWrap: true,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ),
                   // decoration: const BoxDecoration(
                   //   image: DecorationImage(
                   //     fit: BoxFit.fill,
@@ -61,7 +65,7 @@ class _Calculate2State extends State<Calculate2> {
                 ),
               ),
               Positioned(
-                top: MediaQuery.of(context).size.height * 0.27,
+                top: MediaQuery.of(context).size.height * 0.23,
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Card(
@@ -81,8 +85,132 @@ class _Calculate2State extends State<Calculate2> {
                           const Text(
                               "Ambil langkah untuk menjadikan bumi semakin baik dengan mengurangi emisi karbonmu"),
                           const SizedBox(height: 20),
-                          SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.3),
+                          InkWell(
+                            onTap: () {},
+                            child: Stack(
+                              children: <Widget>[
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.23,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            "assets/images/adopt_pic.png"),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.23,
+                                    color: Colors.black45,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 25),
+                                  child: Center(
+                                      child: Column(
+                                    children: [
+                                      Text(
+                                        "Adopt Tree / Adopsi Pohon",
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6
+                                            ?.copyWith(
+                                              color: Colors.white,
+                                            ),
+                                      ),
+                                      const SizedBox(height: 30),
+                                      Text(
+                                        "Mulai dari Rp. 15.000 kamu bisa mengurangi emisi karbonmu sebesar 100kg",
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6
+                                            ?.copyWith(
+                                                color: Colors.white,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.normal),
+                                      ),
+                                    ],
+                                  )),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          InkWell(
+                            onTap: () {},
+                            child: Stack(
+                              children: <Widget>[
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.23,
+                                    decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            "assets/images/plant_pic.png"),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.23,
+                                    color: Colors.black45,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 25),
+                                  child: Center(
+                                      child: Column(
+                                    children: [
+                                      Text(
+                                        "Tree Planting / Penanaman Pohon",
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6
+                                            ?.copyWith(
+                                              color: Colors.white,
+                                            ),
+                                      ),
+                                      const SizedBox(height: 30),
+                                      Text(
+                                        "Dengan menanam bibit pohon baru kamu mulai mengurangi emisi karbon dan mengatasi maslah lingkungan",
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6
+                                            ?.copyWith(
+                                                color: Colors.white,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.normal),
+                                      ),
+                                    ],
+                                  )),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 20),
                           Align(
                             alignment: Alignment.bottomRight,
                             child: SizedBox(
@@ -96,19 +224,14 @@ class _Calculate2State extends State<Calculate2> {
                                 ),
                                 child: const Text('LEWATI'),
                                 onPressed: () async {
-                                  // if (_formKey.currentState!.validate()) {
-                                  //   setState(() {
-                                  //     isLoading = true;
-                                  //   });
-
-                                  //   loginUser();
-                                  // }
-                                  // Navigator.pushReplacement(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) => Dashboard(),
-                                  //   ),
-                                  // );
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Dashboard(
+                                        userModel: widget.userModel,
+                                      ),
+                                    ),
+                                  );
                                 },
                               ),
                             ),

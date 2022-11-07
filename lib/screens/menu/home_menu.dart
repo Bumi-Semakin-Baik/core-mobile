@@ -1,8 +1,12 @@
+import 'package:bumibaik_app/common/common_method.dart';
 import 'package:bumibaik_app/common/common_shimmer_widget.dart';
+import 'package:bumibaik_app/common/common_widget.dart';
 import 'package:bumibaik_app/models/news_model.dart';
 import 'package:bumibaik_app/models/product_planting_model.dart';
 import 'package:bumibaik_app/models/user_model.dart';
 import 'package:bumibaik_app/resources/color_manager.dart';
+import 'package:bumibaik_app/screens/tree_adopt/tree_adopt_list.dart';
+import 'package:bumibaik_app/screens/tree_planting/tree_planting_list.dart';
 import 'package:bumibaik_app/screens/widgets/product_widget.dart';
 import 'package:bumibaik_app/services/product_service.dart';
 import 'package:flutter/material.dart';
@@ -30,18 +34,39 @@ class _HomeMenuState extends State<HomeMenu> {
   @override
   void initState() {
     getData();
+    getPlantingData();
+    getNewsData();
+
     super.initState();
   }
 
   getData() async {
     try {
       productAdoptList = await ProductService().getProductAdopt();
+
+      setState(() {});
+    } catch (e) {
+      print("adopt: " + e.toString());
+    }
+  }
+
+  getPlantingData() async {
+    try {
       productPlantingList = await ProductService().getProductPlanting();
+
+      setState(() {});
+    } catch (e) {
+      print("planting: " + e.toString());
+    }
+  }
+
+  getNewsData() async {
+    try {
       news = await NewsService().getNews();
 
       setState(() {});
     } catch (e) {
-      print(e);
+      print("news: " + e.toString());
     }
   }
 
@@ -191,7 +216,14 @@ class _HomeMenuState extends State<HomeMenu> {
                 foregroundColor: Colors.white, // foreground
               ),
               child: const Text('Lainnya'),
-              onPressed: () {},
+              onPressed: () {
+                CommonWidget().movePage(
+                  context,
+                  TreePlantingList(
+                    plantingList: productPlantingList!,
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -253,7 +285,14 @@ class _HomeMenuState extends State<HomeMenu> {
                 foregroundColor: Colors.white, // foreground
               ),
               child: const Text('Lainnya'),
-              onPressed: () {},
+              onPressed: () {
+                CommonWidget().movePage(
+                  context,
+                  TreeAdoptList(
+                    adoptList: productAdoptList!,
+                  ),
+                );
+              },
             ),
           ],
         ),

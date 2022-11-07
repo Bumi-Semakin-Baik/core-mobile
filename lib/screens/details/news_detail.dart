@@ -4,6 +4,7 @@ import 'package:bumibaik_app/models/news_model.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 import '../../services/news_service.dart';
@@ -74,7 +75,7 @@ class _NewsDetailState extends State<NewsDetail> {
                           ),
                           const SizedBox(width: 5),
                           Text(
-                            DateFormat.yMMMMd('id_ID')
+                            DateFormat.yMMMMEEEEd('id_ID')
                                 .format(widget.news.createdAt!),
                             style:
                                 Theme.of(context).textTheme.bodyText2?.copyWith(
@@ -99,6 +100,23 @@ class _NewsDetailState extends State<NewsDetail> {
                                     ),
                           ),
                         ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const Icon(
+                        FontAwesomeIcons.pen,
+                        color: Colors.grey,
+                        size: 18,
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        newsDetail == null ? "-" : newsDetail!.author!,
+                        style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                              color: Colors.grey,
+                            ),
                       ),
                     ],
                   ),

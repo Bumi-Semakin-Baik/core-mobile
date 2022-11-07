@@ -18,8 +18,8 @@ class CarbonModel {
   });
 
   int? userId;
-  String? emision;
-  String? offset;
+  double? emision;
+  double? offset;
   DateTime? lastCalculate;
 
   factory CarbonModel.fromJson(Map<String, dynamic> json) => CarbonModel(

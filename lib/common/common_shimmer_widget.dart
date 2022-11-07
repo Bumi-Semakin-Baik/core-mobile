@@ -154,4 +154,65 @@ class CommonShimmerWidget {
       ),
     );
   }
+
+  Widget buildTextDetailShimmer(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Shimmer.fromColors(
+            baseColor: Colors.black12,
+            highlightColor: Colors.white60,
+            child: Container(
+              width: double.infinity,
+              height: 20,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Shimmer.fromColors(
+            baseColor: Colors.black12,
+            highlightColor: Colors.white60,
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: 10,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 30),
+          Shimmer.fromColors(
+            baseColor: Colors.black12,
+            highlightColor: Colors.white60,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: 10,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Shimmer.fromColors(
+            baseColor: Colors.black12,
+            highlightColor: Colors.white60,
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: 10,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Shimmer.fromColors(
+            baseColor: Colors.black12,
+            highlightColor: Colors.white60,
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.3,
+              height: 10,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

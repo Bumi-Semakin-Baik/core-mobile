@@ -37,10 +37,10 @@ class ProductPlantingModel {
       ProductPlantingModel(
         id: json["id"],
         name: json["name"],
-        detail: json["detail"],
-        location: json["location"],
-        price: json["price"],
-        tree: TreeModel.fromJson(json["tree"]),
+        detail: json["detail"] ?? "",
+        location: json["location"] ?? "",
+        price: json["price"] ?? 0,
+        tree: json["tree"] == null ? null : TreeModel.fromJson(json["tree"]),
         datePlanting: DateTime.parse(json["date_planting"]),
         images: List<String>.from(json["images"].map((x) => x)),
       );
