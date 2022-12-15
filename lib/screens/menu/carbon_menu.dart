@@ -1,17 +1,21 @@
 import 'package:bumibaik_app/models/carbon_and_tree_model.dart';
 import 'package:bumibaik_app/models/carbon_model.dart';
 import 'package:bumibaik_app/models/tree_model.dart';
+import 'package:bumibaik_app/models/user_model.dart';
 import 'package:bumibaik_app/services/carbon_service.dart';
+import 'package:bumibaik_app/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:liquid_progress_indicator_ns/liquid_progress_indicator.dart';
 import 'dart:async';
+import 'package:intl/intl.dart';
 
 import '../../resources/color_manager.dart';
 
 class CarbonMenu extends StatefulWidget {
-  CarbonMenu({Key? key}) : super(key: key);
+  UserModel userModel;
+  CarbonMenu({required this.userModel, Key? key}) : super(key: key);
 
   @override
   State<CarbonMenu> createState() => _CarbonMenuState();
@@ -34,27 +38,6 @@ class _CarbonMenuState extends State<CarbonMenu> {
   Future<void> _goToTheLake() async {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  }
-
-  CarbonModel? carbon;
-  List<TreeModel> trees = [];
-
-  @override
-  void initState() {
-    getCarbonData();
-
-    super.initState();
-  }
-
-  getCarbonData() async {
-    CarbonAndTreeModel res = await CarbonService().getCarbon();
-
-    print(res);
-
-    carbon = res.carbon;
-    trees.addAll(res.trees!);
-
-    setState(() {});
   }
 
   @override
@@ -85,10 +68,11 @@ class _CarbonMenuState extends State<CarbonMenu> {
         padding: const EdgeInsets.symmetric(vertical: 40),
         child: FloatingActionButton.extended(
           backgroundColor: ColorManager.primary,
-          onPressed: _goToTheLake,
-          label: Text('Daftar Pohon Kamu'),
-          icon: Icon(
-            FontAwesomeIcons.tree,
+          //onPressed: _goToTheLake,
+          onPressed: null,
+          label: const Text('Daftar Pohon Kamu'),
+          icon: const Icon(
+            FontAwesomeIcons.mapPin,
           ),
         ),
       ),
@@ -98,7 +82,7 @@ class _CarbonMenuState extends State<CarbonMenu> {
   buildAppbar() {
     return AppBar(
       elevation: 1,
-      toolbarHeight: MediaQuery.of(context).size.height * 0.51,
+      toolbarHeight: MediaQuery.of(context).size.height * 0.54,
       backgroundColor: Colors.white,
       flexibleSpace: SafeArea(
         child: Padding(
@@ -133,7 +117,11 @@ class _CarbonMenuState extends State<CarbonMenu> {
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height * 0.15,
                   child: LiquidLinearProgressIndicator(
-                    value: 0.25, // Defaults to 0.5.
+                    value: carbon == null
+                        ? 0
+                        : carbon!.offset == null
+                            ? 0
+                            : carbon!.offset! / 100, // Defaults to 0.5.
                     valueColor: AlwaysStoppedAnimation(ColorManager
                         .primary), // Defaults to the current Theme's accentColor.
                     backgroundColor: Colors.grey[
@@ -143,9 +131,13 @@ class _CarbonMenuState extends State<CarbonMenu> {
                     borderRadius: 12.0,
                     direction: Axis
                         .vertical, // The direction the liquid moves (Axis.vertical = bottom to top, Axis.horizontal = left to right). Defaults to Axis.horizontal.
-                    center: const Text(
-                      "15%",
-                      style: TextStyle(
+                    center: Text(
+                      carbon == null
+                          ? "0%"
+                          : carbon!.offset == null
+                              ? "0%"
+                              : "${carbon!.offset!.toStringAsFixed(0)}%",
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -155,14 +147,20 @@ class _CarbonMenuState extends State<CarbonMenu> {
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.015),
-              const Text(
-                "Pelunasan karbon kamu telah mencapai 15% dari total jejak karbon dalam setahun terakhir",
-                style: TextStyle(color: Colors.black),
+              Text(
+                carbon == null
+                    ? "Pelunasan karbon kamu masi 0% dalam setahun terakhir"
+                    : carbon!.offset == null
+                        ? "Pelunasan karbon kamu masi 0% dalam setahun terakhir"
+                        : "Pelunasan karbon kamu telah mencapai ${carbon!.offset!}% dari total jejak karbon dalam setahun terakhir",
+                style: const TextStyle(color: Colors.black),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.015),
-              const Text(
-                "Tanggal perhitungan jejak karbon terakhir 10 Juni 2022",
-                style: TextStyle(color: Colors.grey),
+              Text(
+                carbon == null
+                    ? ""
+                    : "Tanggal perhitungan jejak karbon terakhir ${DateFormat.yMMMEd('id_ID').format(carbon!.lastCalculate!)}",
+                style: const TextStyle(color: Colors.grey),
               ),
             ],
           ),

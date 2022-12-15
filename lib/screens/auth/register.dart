@@ -338,6 +338,8 @@ class _DaftarState extends State<Register> {
 
       UserModel? user = res.user!;
 
+      print(user.type);
+
       CommonMethod().saveUserLoginsDetails(
         user.id!,
         user.name!,

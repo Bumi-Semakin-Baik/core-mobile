@@ -62,11 +62,15 @@ class AuthService {
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         var result = json.decode(response.body)['data'];
+
+        print(result);
         return AuthResponseModel.fromJson(result);
       } else {
-        throw RegisterValidationModel.fromJson(
-          json.decode(response.body)['validation_error'],
-        );
+        print(response.body);
+        // throw RegisterValidationModel.fromJson(
+        //   json.decode(response.body)['validation_error'],
+        // );
+        throw json.decode(response.body)['message'];
       }
     } catch (e) {
       rethrow;

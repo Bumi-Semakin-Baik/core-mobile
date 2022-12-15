@@ -99,25 +99,25 @@ class _NewsWidgetState extends State<NewsWidget> {
                               ),
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              const Icon(
-                                Icons.visibility,
-                                color: Colors.grey,
-                              ),
-                              const SizedBox(width: 5),
-                              Text(
-                                widget.news.views!.toString(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2
-                                    ?.copyWith(
-                                      color: Colors.grey,
-                                    ),
-                              ),
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          //   children: [
+                          //     const Icon(
+                          //       Icons.visibility,
+                          //       color: Colors.grey,
+                          //     ),
+                          //     const SizedBox(width: 5),
+                          //     Text(
+                          //       widget.news.views!.toString(),
+                          //       style: Theme.of(context)
+                          //           .textTheme
+                          //           .bodyText2
+                          //           ?.copyWith(
+                          //             color: Colors.grey,
+                          //           ),
+                          //     ),
+                          //   ],
+                          // ),
                         ],
                       ),
                     ],

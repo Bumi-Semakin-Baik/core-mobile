@@ -41,69 +41,72 @@ class _NewsMenuState extends State<NewsMenu> {
 
     final List<Widget> imageSliders = news == null
         ? []
-        : news!
-            .getRange(0, 4)
-            .map(
-              (item) => InkWell(
-                onTap: () {
-                  CommonWidget().movePage(
-                    context,
-                    NewsDetail(
-                      news: item,
-                    ),
-                  );
-                },
-                child: Container(
-                  margin: const EdgeInsets.all(5.0),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    child: Stack(
-                      children: <Widget>[
-                        // Image.network(item.image!,
-                        //     fit: BoxFit.cover, width: 1000.0),
-                        FancyShimmerImage(
-                          boxDecoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          boxFit: BoxFit.cover,
-                          imageUrl: item.image!,
-                          errorWidget: Image.network(
-                              'https://i0.wp.com/www.dobitaobyte.com.br/wp-content/uploads/2016/02/no_image.png?ssl=1'),
+        : news!.isEmpty
+            ? []
+            : news!
+                .getRange(0, 4)
+                .map(
+                  (item) => InkWell(
+                    onTap: () {
+                      CommonWidget().movePage(
+                        context,
+                        NewsDetail(
+                          news: item,
                         ),
-                        Positioned(
-                          bottom: 0.0,
-                          left: 0.0,
-                          right: 0.0,
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color.fromARGB(200, 0, 0, 0),
-                                  Color.fromARGB(0, 0, 0, 0)
-                                ],
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter,
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(5.0),
+                      child: ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        child: Stack(
+                          children: <Widget>[
+                            // Image.network(item.image!,
+                            //     fit: BoxFit.cover, width: 1000.0),
+                            FancyShimmerImage(
+                              boxDecoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              boxFit: BoxFit.cover,
+                              imageUrl: item.image!,
+                              errorWidget: Image.network(
+                                  'https://i0.wp.com/www.dobitaobyte.com.br/wp-content/uploads/2016/02/no_image.png?ssl=1'),
+                            ),
+                            Positioned(
+                              bottom: 0.0,
+                              left: 0.0,
+                              right: 0.0,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color.fromARGB(200, 0, 0, 0),
+                                      Color.fromARGB(0, 0, 0, 0)
+                                    ],
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
+                                  ),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 20.0, horizontal: 20.0),
+                                child: Text(
+                                  item.title!,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 17.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                             ),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20.0, horizontal: 20.0),
-                            child: Text(
-                              item.title!,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 17.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            )
-            .toList();
+                )
+                .toList();
 
     return Scaffold(
       appBar: AppBar(

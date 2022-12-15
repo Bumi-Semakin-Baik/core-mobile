@@ -2,6 +2,8 @@ import 'package:bumibaik_app/common/common_method.dart';
 import 'package:bumibaik_app/common/common_widget.dart';
 import 'package:bumibaik_app/models/user_model.dart';
 import 'package:bumibaik_app/screens/auth/login.dart';
+import 'package:bumibaik_app/screens/daftar_transaksi.dart';
+import 'package:bumibaik_app/screens/profile/edit_password.dart';
 import 'package:bumibaik_app/screens/profile/edit_profile.dart';
 import 'package:bumibaik_app/screens/profile/tentang/panduan.dart';
 import 'package:bumibaik_app/screens/profile/tentang/pusat_bantuan.dart';
@@ -115,7 +117,7 @@ class _ProfileMenuState extends State<ProfileMenu> {
                     ),
                     child: const Text('Edit Profil'),
                     onPressed: () async {
-                      CommonWidget().movePage(context, EditProfile());
+                      //CommonWidget().movePage(context, EditProfile());
                     },
                   ),
                 ),
@@ -129,7 +131,7 @@ class _ProfileMenuState extends State<ProfileMenu> {
                     ),
                     child: const Text('Edit Password'),
                     onPressed: () async {
-                      CommonWidget().movePage(context, EditProfile());
+                      //CommonWidget().movePage(context, EditPassword());
                     },
                   ),
                 ),
@@ -162,7 +164,7 @@ class _ProfileMenuState extends State<ProfileMenu> {
           const SizedBox(height: 5),
           ListTile(
             onTap: () {
-              CommonWidget().movePage(context, TentangBb());
+              CommonWidget().movePage(context, DaftarTransaksi());
             },
             leading: Icon(
               FontAwesomeIcons.cartShopping,
@@ -180,7 +182,7 @@ class _ProfileMenuState extends State<ProfileMenu> {
           ),
           ListTile(
             onTap: () {
-              CommonWidget().movePage(context, Panduan());
+              //CommonWidget().movePage(context, Panduan());
             },
             leading: Icon(
               FontAwesomeIcons.gift,

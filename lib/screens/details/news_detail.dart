@@ -84,39 +84,39 @@ class _NewsDetailState extends State<NewsDetail> {
                           ),
                         ],
                       ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   children: [
+                      //     const Icon(
+                      //       Icons.visibility,
+                      //       color: Colors.grey,
+                      //     ),
+                      //     const SizedBox(width: 5),
+                      //     Text(
+                      //       widget.news.views!.toString(),
+                      //       style:
+                      //           Theme.of(context).textTheme.bodyText2?.copyWith(
+                      //                 color: Colors.grey,
+                      //               ),
+                      //     ),
+                      //   ],
+                      // ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const Icon(
-                            Icons.visibility,
+                            FontAwesomeIcons.pen,
                             color: Colors.grey,
+                            size: 18,
                           ),
-                          const SizedBox(width: 5),
+                          const SizedBox(width: 10),
                           Text(
-                            widget.news.views!.toString(),
+                            newsDetail == null ? "-" : newsDetail!.author!,
                             style:
                                 Theme.of(context).textTheme.bodyText2?.copyWith(
                                       color: Colors.grey,
                                     ),
                           ),
                         ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      const Icon(
-                        FontAwesomeIcons.pen,
-                        color: Colors.grey,
-                        size: 18,
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        newsDetail == null ? "-" : newsDetail!.author!,
-                        style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                              color: Colors.grey,
-                            ),
                       ),
                     ],
                   ),

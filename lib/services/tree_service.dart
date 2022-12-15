@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bumibaik_app/models/news_model.dart';
+import 'package:bumibaik_app/models/tree_scan_detail_model.dart';
 import 'package:bumibaik_app/resources/app_constants.dart';
 import 'package:http/http.dart' as http;
 
@@ -34,6 +35,36 @@ class TreeService {
         }
 
         return newsData;
+      } else {
+        print(response.statusCode);
+        throw Exception("ehe");
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  Future<TreeScanDetailModel> getTreeScanDetails(String code) async {
+    String url = "$treeUrl/scan/$code";
+
+    print(url);
+
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Cache-control': 'no-cache',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $globalAccessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body)['data'];
+
+        return TreeScanDetailModel.fromJson(data);
       } else {
         print(response.statusCode);
         throw Exception("ehe");

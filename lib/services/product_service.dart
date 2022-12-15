@@ -66,8 +66,6 @@ class ProductService {
         var data = jsonDecode(response.body)['data'];
         List<ProductPlantingModel> newsData = [];
 
-        print(data);
-
         for (var item in data) {
           newsData.add(ProductPlantingModel.fromJson(item));
         }

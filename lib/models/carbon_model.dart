@@ -25,7 +25,7 @@ class CarbonModel {
   factory CarbonModel.fromJson(Map<String, dynamic> json) => CarbonModel(
         userId: json["user_id"],
         emision: json["emision"],
-        offset: json["offset"],
+        offset: json["offset"].toDouble(),
         lastCalculate: DateTime.parse(json["last_calculate"]),
       );
 

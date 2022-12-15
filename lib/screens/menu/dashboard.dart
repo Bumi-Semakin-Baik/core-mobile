@@ -34,7 +34,9 @@ class _DashboardState extends State<Dashboard> {
       HomeMenu(userModel: widget.userModel),
       NewsMenu(),
       ScanMenu(),
-      CarbonMenu(),
+      CarbonMenu(
+        userModel: widget.userModel,
+      ),
       ProfileMenu(userModel: widget.userModel),
     ];
   }

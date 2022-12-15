@@ -2,10 +2,14 @@ import 'package:bumibaik_app/common/common_dialog_widget.dart';
 import 'package:bumibaik_app/common/common_shimmer_widget.dart';
 import 'package:bumibaik_app/common/common_widget.dart';
 import 'package:bumibaik_app/models/product_adopt_model.dart';
+import 'package:bumibaik_app/models/transaction_model.dart';
+import 'package:bumibaik_app/services/midtrans_service.dart';
 import 'package:bumibaik_app/services/product_service.dart';
+import 'package:bumibaik_app/services/transaction_service.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:midtrans_sdk/midtrans_sdk.dart';
 
 import '../../resources/color_manager.dart';
 
@@ -21,11 +25,34 @@ class TreeAdoptDetail extends StatefulWidget {
 class _TreeAdoptDetailState extends State<TreeAdoptDetail> {
   ProductAdoptModel? newData;
 
+  MidtransSDK? _midtrans;
+
+  bool isLoading = false;
+
   @override
   void initState() {
     getData();
+    initSDK();
 
     super.initState();
+  }
+
+  void initSDK() async {
+    _midtrans = await MidtransSDK.init(
+      config: MidtransService().config,
+    );
+    _midtrans?.setUIKitCustomSetting(
+      skipCustomerDetailsPages: true,
+    );
+    _midtrans!.setTransactionFinishedCallback((result) {
+      //print(result.toJson());
+    });
+  }
+
+  @override
+  void dispose() {
+    _midtrans?.removeTransactionFinishedCallback();
+    super.dispose();
   }
 
   getData() async {
@@ -36,6 +63,7 @@ class _TreeAdoptDetailState extends State<TreeAdoptDetail> {
   }
 
   int? _selectedIndex;
+
   final List<String> _options = [
     'Rp.15.000',
     'Rp.25.000',
@@ -44,12 +72,20 @@ class _TreeAdoptDetailState extends State<TreeAdoptDetail> {
     "Rp.100.000",
   ];
 
+  final List<double> optionValue = [
+    15000,
+    25000,
+    50000,
+    75000,
+    100000,
+  ];
+
   Widget _buildChips() {
     List<Widget> chips = [];
 
     for (int i = 0; i < _options.length; i++) {
       ChoiceChip choiceChip = ChoiceChip(
-        labelPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        labelPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         selected: _selectedIndex == i,
         label: Text(_options[i], style: const TextStyle(color: Colors.white)),
         elevation: 1,
@@ -59,7 +95,9 @@ class _TreeAdoptDetailState extends State<TreeAdoptDetail> {
         onSelected: (bool selected) {
           setState(() {
             if (selected) {
-              _selectedIndex = i;
+              setState(() {
+                _selectedIndex = i;
+              });
             }
           });
         },
@@ -210,19 +248,27 @@ class _TreeAdoptDetailState extends State<TreeAdoptDetail> {
                                       ColorManager.primary, // background
                                   foregroundColor: Colors.white, // foreground
                                 ),
-                                child: const Text('Beli'),
+                                child: isLoading
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    : const Text('Beli'),
                                 onPressed: () async {
-                                  // if (_formKey.currentState!.validate()) {
-                                  //   setState(() {
-                                  //     isLoading = true;
-                                  //   });
-
-                                  //   loginUser();
-                                  // }
-                                  CommonDialogWidget.buildOkDialog(
-                                      context,
-                                      false,
-                                      "Fitur pembayaran masih dalam tahap pengembangan.");
+                                  // CommonDialogWidget.buildOkDialog(
+                                  //     context,
+                                  //     false,
+                                  //     "Fitur pembayaran masih dalam tahap pengembangan.");
+                                  if (_selectedIndex == null) {
+                                    CommonDialogWidget.buildOkDialog(
+                                        context,
+                                        false,
+                                        "Harap pilih nominal pembelian terlebih dahulu.");
+                                  } else {
+                                    startTransaction();
+                                  }
                                 },
                               ),
                             ),
@@ -232,23 +278,6 @@ class _TreeAdoptDetailState extends State<TreeAdoptDetail> {
                 const SizedBox(height: 20),
               ],
             ),
-            // Column(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   crossAxisAlignment: CrossAxisAlignment.end,
-            //   children: [
-            //     Container(
-            //       color: Colors.white,
-            //       height: 50,
-            //       width: double.infinity,
-            //       child: Expanded(
-            //         child: OutlinedButton(
-            //           onPressed: () {},
-            //           child: Text("Beli"),
-            //         ),
-            //       ),
-            //     )
-            //   ],
-            // )
           ],
         ),
       ),
@@ -276,5 +305,55 @@ class _TreeAdoptDetailState extends State<TreeAdoptDetail> {
     }
 
     return images;
+  }
+
+  startTransaction() async {
+    Map<String, dynamic> data = {
+      "productId": widget.productAdoptModel.id,
+      "productName": widget.productAdoptModel.name,
+      "total": 15000,
+    };
+    try {
+      TransactionReturnModel? tr = await TransactionService().adoptTree(data);
+      String? token = tr.token;
+
+      try {
+        await _midtrans?.startPaymentUiFlow(
+          token: token,
+        );
+
+        // setState(() {
+        //   _isLoading = false;
+        // });
+
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => PaymentStatus(
+        //       orderId: orderId,
+        //       paymentStatus: true,
+        //     ),
+        //   ),
+        // );
+      } catch (e) {
+        // setState(() {
+        //   _isLoading = false;
+        // });
+
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => PaymentStatus(
+        //       orderId: orderId,
+        //       paymentStatus: false,
+        //     ),
+        //   ),
+        // );
+        // ignore: use_build_context_synchronously
+        CommonDialogWidget.buildOkDialog(context, false, e.toString());
+      }
+    } catch (e) {
+      CommonDialogWidget.buildOkDialog(context, false, e.toString());
+    }
   }
 }
