@@ -50,7 +50,7 @@ class _TreePlantingDetailState extends State<TreePlantingDetail> {
 
     for (int i = 0; i < _options.length; i++) {
       ChoiceChip choiceChip = ChoiceChip(
-        labelPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        labelPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         selected: _selectedIndex == i,
         label: Text(_options[i], style: const TextStyle(color: Colors.white)),
         elevation: 1,
