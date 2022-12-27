@@ -128,46 +128,45 @@ class _HomeMenuState extends State<HomeMenu> {
       backgroundColor: Colors.white,
       flexibleSpace: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FancyShimmerImage(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        boxFit: BoxFit.contain,
-                        imageUrl: widget.userModel.photo!,
-                        errorWidget: Image.network(
-                            'https://i0.wp.com/www.dobitaobyte.com.br/wp-content/uploads/2016/02/no_image.png?ssl=1'),
-                      ),
-                      Text(
-                        "Halo,",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2
-                            ?.copyWith(fontSize: 20),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        "${widget.userModel.name}!",
-                        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                              fontSize: 30,
-                            ),
-                      ),
-                    ],
+                  FancyShimmerImage(
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    boxFit: BoxFit.contain,
+                    imageUrl: widget.userModel.photo!,
+                    errorWidget: Image.network(
+                        'https://i0.wp.com/www.dobitaobyte.com.br/wp-content/uploads/2016/02/no_image.png?ssl=1'),
                   ),
-                  Image(
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    image: const AssetImage('assets/images/logo_icon.png'),
+                  Text(
+                    "Halo,",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        ?.copyWith(fontSize: 20),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    widget.userModel.name!.length > 15
+                        ? "${widget.userModel.name!.substring(0, 18)}..."
+                        : "${widget.userModel.name}!",
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                          fontSize: 30,
+                        ),
                   ),
                 ],
+              ),
+              Image(
+                width: MediaQuery.of(context).size.width * 0.2,
+                image: const AssetImage('assets/images/logo_icon.png'),
               ),
             ],
           ),
@@ -506,6 +505,7 @@ class _HomeMenuState extends State<HomeMenu> {
                       const SizedBox(height: 5),
                       Text(
                         "${widget.userModel.name}!",
+                        overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyText1?.copyWith(
                               fontSize: 30,
                             ),

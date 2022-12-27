@@ -6,6 +6,7 @@ import 'package:bumibaik_app/screens/auth/login.dart';
 import 'package:bumibaik_app/screens/menu/dashboard.dart';
 import 'package:bumibaik_app/services/auth_service.dart';
 import 'package:bumibaik_app/services/carbon_service.dart';
+import 'package:bumibaik_app/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -83,9 +84,11 @@ class _SplashscreenState extends State<Splashscreen> {
       try {
         AuthResponseModel? res = await AuthService().login(data);
 
-        UserModel? user = res.user!;
+        setState(() {
+          globalAccessToken = res.accessToken!;
+        });
 
-        print(res.user!.type);
+        UserModel user = await UserService().getUserDetails();
 
         CommonMethod().saveUserLoginsDetails(
           user.id!,
@@ -95,10 +98,6 @@ class _SplashscreenState extends State<Splashscreen> {
           res.accessToken!,
           true,
         );
-
-        globalAccessToken = res.accessToken!;
-
-        setState(() {});
 
         await getCarbonData();
 
@@ -117,7 +116,7 @@ class _SplashscreenState extends State<Splashscreen> {
   }
 
   buildError(var e) {
-    CommonDialogWidget.buildOkDialog(context, false, e.toString());
+    CommonDialogWidget.buildWrongWithAuth(context, false, e.toString());
   }
 
   _goToPage(Widget name) {
@@ -144,7 +143,7 @@ class _SplashscreenState extends State<Splashscreen> {
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             Text(
-              "v 0.0.7",
+              "v 0.0.9",
               style: Theme.of(context).textTheme.caption,
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.2),
@@ -154,8 +153,8 @@ class _SplashscreenState extends State<Splashscreen> {
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             Image(
-              width: MediaQuery.of(context).size.width * 0.4,
-              image: const AssetImage('assets/images/from_logos.png'),
+              width: MediaQuery.of(context).size.width * 0.2,
+              image: const AssetImage('assets/images/logo_cempaka.png'),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
           ],

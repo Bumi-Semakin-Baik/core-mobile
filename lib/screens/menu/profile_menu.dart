@@ -117,7 +117,11 @@ class _ProfileMenuState extends State<ProfileMenu> {
                     ),
                     child: const Text('Edit Profil'),
                     onPressed: () async {
-                      //CommonWidget().movePage(context, EditProfile());
+                      CommonWidget().movePage(
+                          context,
+                          EditProfile(
+                            userModel: widget.userModel,
+                          ));
                     },
                   ),
                 ),
@@ -131,7 +135,7 @@ class _ProfileMenuState extends State<ProfileMenu> {
                     ),
                     child: const Text('Edit Password'),
                     onPressed: () async {
-                      //CommonWidget().movePage(context, EditPassword());
+                      CommonWidget().movePage(context, EditPassword());
                     },
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:bumibaik_app/common/common_widget.dart';
 import 'package:bumibaik_app/screens/auth/register.dart';
+import 'package:bumibaik_app/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -231,31 +232,40 @@ class _LoginState extends State<Login> {
     try {
       AuthResponseModel? res = await AuthService().login(data);
 
-      print(res);
+      try {
+        setState(() {
+          globalAccessToken = res.accessToken!;
+        });
 
-      UserModel? user = res.user!;
+        UserModel user = await UserService().getUserDetails();
 
-      CommonMethod().saveUserLoginsDetails(
-        user.id!,
-        user.name!,
-        user.email!,
-        passwordController.text.trim(),
-        res.accessToken!,
-        true,
-      );
+        CommonMethod().saveUserLoginsDetails(
+          user.id!,
+          user.name!,
+          user.email!,
+          passwordController.text.trim(),
+          res.accessToken!,
+          true,
+        );
 
-      setState(() {
-        isLoading = false;
-        globalAccessToken = res.accessToken!;
-      });
+        setState(() {
+          isLoading = false;
+        });
 
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Dashboard(
-              userModel: user,
-            ),
-          ));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Dashboard(
+                userModel: user,
+              ),
+            ));
+      } catch (e) {
+        CommonDialogWidget.buildOkDialog(context, false, e.toString());
+
+        setState(() {
+          isLoading = false;
+        });
+      }
     } catch (e) {
       CommonDialogWidget.buildOkDialog(context, false, e.toString());
 

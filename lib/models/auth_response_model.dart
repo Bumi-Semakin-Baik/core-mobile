@@ -27,7 +27,7 @@ class AuthResponseModel {
       AuthResponseModel(
         accessToken: json["access_token"],
         refreshToken: json["refresh_token"],
-        user: UserModel.fromJson(json["user"]),
+        //user: UserModel.fromJson(json["user"]),
       );
 
   Map<String, dynamic> toJson() => {
