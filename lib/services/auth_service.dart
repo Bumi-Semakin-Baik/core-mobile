@@ -34,6 +34,7 @@ class AuthService {
         var result = json.decode(response.body)['data'];
         return AuthResponseModel.fromJson(result);
       } else {
+        print(json.decode(response.body));
         throw RegisterValidationModel.fromJson(
           json.decode(response.body)['validation_error'],
         );

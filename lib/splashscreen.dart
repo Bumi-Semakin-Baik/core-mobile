@@ -143,7 +143,7 @@ class _SplashscreenState extends State<Splashscreen> {
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             Text(
-              "v 0.0.9",
+              "v 0.1.1",
               style: Theme.of(context).textTheme.caption,
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.2),

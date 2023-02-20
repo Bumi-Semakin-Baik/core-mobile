@@ -39,18 +39,23 @@ class _DaftarTransaksiState extends State<DaftarTransaksi> {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: CommonShimmerWidget().buildNewsItemShimmer(context),
             )
-          : Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: transList!.length,
-                itemBuilder: (context, index) {
-                  return TransactionItemWidget(
-                    item: transList![index],
-                  );
-                },
-              ),
-            ),
+          : transList!.isEmpty
+              ? const Center(
+                  child: Text("Maaf. Anda belum memiliki transaksi."),
+                )
+              : Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: transList!.length,
+                    itemBuilder: (context, index) {
+                      return TransactionItemWidget(
+                        item: transList![index],
+                      );
+                    },
+                  ),
+                ),
     );
   }
 }

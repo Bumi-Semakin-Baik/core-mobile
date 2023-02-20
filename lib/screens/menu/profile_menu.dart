@@ -87,14 +87,16 @@ class _ProfileMenuState extends State<ProfileMenu> {
           Center(
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 50,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.15,
+                  width: MediaQuery.of(context).size.width * 0.4,
                   child: FancyShimmerImage(
                     boxDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(90),
                     ),
                     boxFit: BoxFit.cover,
-                    imageUrl: widget.userModel.photo!,
+                    imageUrl: widget.userModel.photo ??
+                        "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Image.png",
                     errorWidget: Image.network(
                         'https://i0.wp.com/www.dobitaobyte.com.br/wp-content/uploads/2016/02/no_image.png?ssl=1'),
                   ),

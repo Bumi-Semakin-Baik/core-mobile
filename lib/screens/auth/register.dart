@@ -11,6 +11,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 
 import '../../models/user_model.dart';
 import '../../resources/color_manager.dart';
+import '../../services/user_service.dart';
 import '../menu/dashboard.dart';
 
 class Register extends StatefulWidget {
@@ -48,7 +49,7 @@ class _DaftarState extends State<Register> {
     RequiredValidator(errorText: "Harap masukan password"),
     MinLengthValidator(8, errorText: "Panjang password minimal 8 karakter"),
     PatternValidator(r'(?=.*?[#?!@$%^&*-])',
-        errorText: "Password harus menyertakan karakter special"),
+        errorText: "Sertakan karakter special (#?!@\$%^&*-)"),
   ]);
 
   final _emailValidator = MultiValidator([
@@ -334,38 +335,48 @@ class _DaftarState extends State<Register> {
     try {
       AuthResponseModel? res = await AuthService().register(data);
 
-      print(res);
+      try {
+        setState(() {
+          globalAccessToken = res.accessToken!;
+        });
 
-      UserModel? user = res.user!;
+        UserModel user = await UserService().getUserDetails();
 
-      print(user.type);
+        CommonMethod().saveUserLoginsDetails(
+          user.id!,
+          user.name!,
+          user.email!,
+          passwordController.text.trim(),
+          res.accessToken!,
+          true,
+        );
 
-      CommonMethod().saveUserLoginsDetails(
-        user.id!,
-        user.name!,
-        user.email!,
-        passwordController.text.trim(),
-        res.accessToken!,
-        true,
-      );
+        setState(() {
+          isLoading = false;
+        });
 
-      setState(() {
-        isLoading = false;
-        globalAccessToken = res.accessToken!;
-      });
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Calculate1(
-            userModel: user,
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Calculate1(
+              userModel: user,
+            ),
           ),
-        ),
-      );
+        );
+      } catch (e) {
+        print(e);
+        CommonDialogWidget.buildOkDialog(context, false, e.toString());
+
+        setState(() {
+          isLoading = false;
+        });
+      }
     } catch (e) {
+      print(e);
       RegisterValidationModel er = e as RegisterValidationModel;
       CommonDialogWidget.buildOkDialog(context, false,
           "${er.email == null ? "" : er.email![0]}${er.telp == null ? "" : er.telp![0]}");
+      //CommonDialogWidget.buildOkDialog(context, false, e.toString());
 
       setState(() {
         isLoading = false;

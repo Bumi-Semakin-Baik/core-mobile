@@ -321,7 +321,7 @@ class _ScanPageState extends State<ScanPage> {
                         ),
                         const SizedBox(height: 30),
                         Text(
-                          "Pohon Terdeteksi",
+                          "Kode QR Terdeteksi",
                           textAlign: TextAlign.center,
                           style: Theme.of(context)
                               .textTheme
