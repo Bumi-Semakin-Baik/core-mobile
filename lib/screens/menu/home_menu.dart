@@ -1,14 +1,19 @@
+import 'package:bumibaik_app/common/common_dialog_widget.dart';
 import 'package:bumibaik_app/common/common_method.dart';
 import 'package:bumibaik_app/common/common_shimmer_widget.dart';
 import 'package:bumibaik_app/common/common_widget.dart';
 import 'package:bumibaik_app/models/news_model.dart';
 import 'package:bumibaik_app/models/product_planting_model.dart';
+import 'package:bumibaik_app/models/project_model.dart';
 import 'package:bumibaik_app/models/user_model.dart';
 import 'package:bumibaik_app/resources/color_manager.dart';
+import 'package:bumibaik_app/screens/details/project_list.dart';
 import 'package:bumibaik_app/screens/tree_adopt/tree_adopt_list.dart';
 import 'package:bumibaik_app/screens/tree_planting/tree_planting_list.dart';
 import 'package:bumibaik_app/screens/widgets/product_widget.dart';
+import 'package:bumibaik_app/screens/widgets/project_widget.dart';
 import 'package:bumibaik_app/services/product_service.dart';
+import 'package:bumibaik_app/services/project_service.dart';
 import 'package:bumibaik_app/splashscreen.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +34,7 @@ class HomeMenu extends StatefulWidget {
 class _HomeMenuState extends State<HomeMenu> {
   List<ProductPlantingModel>? productPlantingList;
   List<ProductAdoptModel>? productAdoptList;
+  List<ProjectModel>? projectList;
   List<NewsModel>? news;
 
   final ScrollController? scrollController1 = ScrollController();
@@ -36,29 +42,31 @@ class _HomeMenuState extends State<HomeMenu> {
   @override
   void initState() {
     getData();
-    getPlantingData();
     getNewsData();
 
     super.initState();
   }
 
   getData() async {
-    try {
-      productAdoptList = await ProductService().getProductAdopt();
+    if (widget.userModel.type!.toLowerCase() == "corporate") {
+      try {
+        projectList = await ProjectService().getProjects();
 
-      setState(() {});
-    } catch (e) {
-      print("adopt: " + e.toString());
-    }
-  }
+        print(projectList!.length);
 
-  getPlantingData() async {
-    try {
-      productPlantingList = await ProductService().getProductPlanting();
+        setState(() {});
+      } catch (e) {
+        CommonDialogWidget.buildOkDialog(context, false, e.toString());
+      }
+    } else {
+      try {
+        productAdoptList = await ProductService().getProductAdopt();
+        productPlantingList = await ProductService().getProductPlanting();
 
-      setState(() {});
-    } catch (e) {
-      print("planting: " + e.toString());
+        setState(() {});
+      } catch (e) {
+        CommonDialogWidget.buildOkDialog(context, false, e.toString());
+      }
     }
   }
 
@@ -442,37 +450,36 @@ class _HomeMenuState extends State<HomeMenu> {
               ),
               child: const Text('Lainnya'),
               onPressed: () {
-                // CommonWidget().movePage(
-                //   context,
-                //   TreeAdoptList(
-                //     adoptList: productAdoptList!,
-                //   ),
-                // );
+                CommonWidget().movePage(
+                  context,
+                  ProjectList(
+                    projectList: projectList!,
+                  ),
+                );
               },
             ),
           ],
         ),
         SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-        //productAdoptList == null
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.2,
-          child: CommonShimmerWidget().buildProductItemShimmer(context),
-        )
-        // : SizedBox(
-        //     height: MediaQuery.of(context).size.height * 0.24,
-        //     child: ListView.builder(
-        //       controller: scrollController1,
-        //       scrollDirection: Axis.horizontal,
-        //       shrinkWrap: true,
-        //       itemCount: productAdoptList!.length,
-        //       itemBuilder: (context, index) {
-        //         return ProductWidget(
-        //           adoptModel: productAdoptList![index],
-        //           plantingModel: null,
-        //         );
-        //       },
-        //     ),
-        //   ),
+        projectList == null
+            ? SizedBox(
+                height: MediaQuery.of(context).size.height * 0.2,
+                child: CommonShimmerWidget().buildProductItemShimmer(context),
+              )
+            : SizedBox(
+                height: MediaQuery.of(context).size.height * 0.24,
+                child: ListView.builder(
+                  controller: scrollController1,
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemCount: projectList!.length,
+                  itemBuilder: (context, index) {
+                    return ProjectWidget(
+                      projectModel: projectList![index],
+                    );
+                  },
+                ),
+              ),
       ],
     );
   }
