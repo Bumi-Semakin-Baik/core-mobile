@@ -1,7 +1,7 @@
-import 'package:bumibaik_app/common/common_method.dart';
-import 'package:bumibaik_app/common/common_widget.dart';
-import 'package:bumibaik_app/models/news_model.dart';
-import 'package:bumibaik_app/screens/details/news_detail.dart';
+import 'package:new_bumi_baik/common/common_method.dart';
+import 'package:new_bumi_baik/common/common_widget.dart';
+import 'package:new_bumi_baik/models/news_model.dart';
+import 'package:new_bumi_baik/screens/details/news_detail.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

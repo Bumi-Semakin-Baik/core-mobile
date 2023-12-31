@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:bumibaik_app/common/common_dialog_widget.dart';
-import 'package:bumibaik_app/common/common_shimmer_widget.dart';
-import 'package:bumibaik_app/models/tree_scan_detail_model.dart';
-import 'package:bumibaik_app/services/tree_service.dart';
+import 'package:new_bumi_baik/common/common_dialog_widget.dart';
+import 'package:new_bumi_baik/common/common_shimmer_widget.dart';
+import 'package:new_bumi_baik/models/tree_scan_detail_model.dart';
+import 'package:new_bumi_baik/services/tree_service.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

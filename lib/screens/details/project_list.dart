@@ -1,9 +1,9 @@
-import 'package:bumibaik_app/common/common_widget.dart';
-import 'package:bumibaik_app/models/product_adopt_model.dart';
-import 'package:bumibaik_app/models/project_model.dart';
-import 'package:bumibaik_app/screens/details/project_detail.dart';
-import 'package:bumibaik_app/screens/tree_adopt/tree_adopt_detail.dart';
-import 'package:bumibaik_app/screens/widgets/product_widget.dart';
+import 'package:new_bumi_baik/common/common_widget.dart';
+import 'package:new_bumi_baik/models/product_adopt_model.dart';
+import 'package:new_bumi_baik/models/project_model.dart';
+import 'package:new_bumi_baik/screens/details/project_detail.dart';
+import 'package:new_bumi_baik/screens/tree_adopt/tree_adopt_detail.dart';
+import 'package:new_bumi_baik/screens/widgets/product_widget.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -21,6 +21,7 @@ class ProjectList extends StatefulWidget {
 }
 
 class _ProjectListState extends State<ProjectList> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +31,7 @@ class _ProjectListState extends State<ProjectList> {
         minItemsPerRow: 2,
         horizontalGridSpacing: 10,
         verticalGridSpacing: 10,
-        minItemWidth: MediaQuery.of(context).size.width * 0.3,
+        minItemWidth: MediaQuery.of(context).size.width * 0.5,
         horizontalGridMargin: 10,
         verticalGridMargin: 10,
         children: List.generate(
@@ -59,7 +60,7 @@ class _ProjectListState extends State<ProjectList> {
                           topRight: Radius.circular(10)),
                       child: FancyShimmerImage(
                         boxFit: BoxFit.cover,
-                        imageUrl: "",
+                        imageUrl: widget.projectList[index].photo.toString(),
                         errorWidget: Image.network(
                             'https://i0.wp.com/www.dobitaobyte.com.br/wp-content/uploads/2016/02/no_image.png?ssl=1'),
                       ),

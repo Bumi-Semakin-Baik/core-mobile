@@ -1,6 +1,6 @@
-import 'package:bumibaik_app/resources/color_manager.dart';
-import 'package:bumibaik_app/screens/widgets/news_widget.dart';
-import 'package:bumibaik_app/services/news_service.dart';
+import 'package:new_bumi_baik/resources/color_manager.dart';
+import 'package:new_bumi_baik/screens/widgets/news_widget.dart';
+import 'package:new_bumi_baik/services/news_service.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
@@ -114,49 +114,56 @@ class _NewsMenuState extends State<NewsMenu> {
         toolbarHeight: MediaQuery.of(context).size.height * 0.42,
         backgroundColor: Colors.white,
         flexibleSpace: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'Berita dan Blog',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+          child: Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    'Berita dan Blog',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-              imageSliders.isEmpty
-                  ? Container()
-                  : buildSliderShow(imageSliders),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Berita & Blog lainnya',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                imageSliders.isEmpty
+                    ? Expanded(child: Container())
+                    : buildSliderShow(imageSliders),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                // const SizedBox(height: 50),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Berita & Blog lainnya',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                            // height: MediaQuery.of(context).size.height * 0.02),
+                            height: MediaQuery.of(context).size.height * 0.005),
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          height: MediaQuery.of(context).size.height * 0.01,
+                          color: ColorManager.blue,
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.007),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      height: MediaQuery.of(context).size.height * 0.01,
-                      color: ColorManager.blue,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

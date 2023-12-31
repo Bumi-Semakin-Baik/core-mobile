@@ -4,8 +4,8 @@
 
 import 'dart:convert';
 
-import 'package:bumibaik_app/models/carbon_model.dart';
-import 'package:bumibaik_app/models/tree_model.dart';
+import 'package:new_bumi_baik/models/carbon_model.dart';
+import 'package:new_bumi_baik/models/tree_model.dart';
 
 CarbonAndTreeModel carbonAndTreeModelFromJson(String str) =>
     CarbonAndTreeModel.fromJson(json.decode(str));

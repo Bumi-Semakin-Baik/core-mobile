@@ -1,9 +1,9 @@
-import 'package:bumibaik_app/common/common_method.dart';
-import 'package:bumibaik_app/common/common_shimmer_widget.dart';
-import 'package:bumibaik_app/common/common_widget.dart';
-import 'package:bumibaik_app/models/transaction_item_model.dart';
-import 'package:bumibaik_app/screens/widgets/transaction_item_widget.dart';
-import 'package:bumibaik_app/services/transaction_service.dart';
+import 'package:new_bumi_baik/common/common_method.dart';
+import 'package:new_bumi_baik/common/common_shimmer_widget.dart';
+import 'package:new_bumi_baik/common/common_widget.dart';
+import 'package:new_bumi_baik/models/transaction_item_model.dart';
+import 'package:new_bumi_baik/screens/widgets/transaction_item_widget.dart';
+import 'package:new_bumi_baik/services/transaction_service.dart';
 import 'package:flutter/material.dart';
 
 import '../services/news_service.dart';

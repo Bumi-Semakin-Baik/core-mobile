@@ -1,6 +1,6 @@
-import 'package:bumibaik_app/common/common_shimmer_widget.dart';
-import 'package:bumibaik_app/common/common_widget.dart';
-import 'package:bumibaik_app/models/news_model.dart';
+import 'package:new_bumi_baik/common/common_shimmer_widget.dart';
+import 'package:new_bumi_baik/common/common_widget.dart';
+import 'package:new_bumi_baik/models/news_model.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';

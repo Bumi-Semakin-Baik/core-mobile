@@ -1,8 +1,8 @@
-import 'package:bumibaik_app/common/common_widget.dart';
-import 'package:bumibaik_app/models/news_model.dart';
-import 'package:bumibaik_app/models/product_adopt_model.dart';
-import 'package:bumibaik_app/resources/color_manager.dart';
-import 'package:bumibaik_app/screens/tree_planting/tree_planting_detail.dart';
+import 'package:new_bumi_baik/common/common_widget.dart';
+import 'package:new_bumi_baik/models/news_model.dart';
+import 'package:new_bumi_baik/models/product_adopt_model.dart';
+import 'package:new_bumi_baik/resources/color_manager.dart';
+import 'package:new_bumi_baik/screens/tree_planting/tree_planting_detail.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter/material.dart';

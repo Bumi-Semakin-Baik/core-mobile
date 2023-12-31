@@ -1,21 +1,13 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.bumibaik_app">
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
     <application
-        tools:replace="android:label, android:usesCleartextTraffic"
-        android:label="BumiBaik"
-        android:usesCleartextTraffic="true"
+        android:label="new_bumi_baik"
         android:name="${applicationName}"
-        android:theme="@style/AppTheme"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        tools:replace="android:label">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
@@ -25,12 +17,12 @@
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
             <meta-data
-                android:name="io.flutter.embedding.android.NormalTheme"
-                android:resource="@style/NormalTheme"
-            />
+              android:name="io.flutter.embedding.android.NormalTheme"
+              android:resource="@style/NormalTheme"
+              />
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
@@ -38,8 +30,5 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDpjvXn0PyBK2zuFoQNZndc4sYKeOY2zaQ" />
     </application>
 </manifest>

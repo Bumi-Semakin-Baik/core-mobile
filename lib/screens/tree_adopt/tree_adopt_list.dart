@@ -1,7 +1,7 @@
-import 'package:bumibaik_app/common/common_widget.dart';
-import 'package:bumibaik_app/models/product_adopt_model.dart';
-import 'package:bumibaik_app/screens/tree_adopt/tree_adopt_detail.dart';
-import 'package:bumibaik_app/screens/widgets/product_widget.dart';
+import 'package:new_bumi_baik/common/common_widget.dart';
+import 'package:new_bumi_baik/models/product_adopt_model.dart';
+import 'package:new_bumi_baik/screens/tree_adopt/tree_adopt_detail.dart';
+import 'package:new_bumi_baik/screens/widgets/product_widget.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
@@ -69,15 +69,17 @@ class _TreeAdoptListState extends State<TreeAdoptList> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.adoptList[index].name!,
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: true,
-                          style:
-                              Theme.of(context).textTheme.headline6?.copyWith(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                  ),
+                        Expanded(
+                          child: Text(
+                            widget.adoptList[index].name!,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                            style:
+                                Theme.of(context).textTheme.headline6?.copyWith(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                    ),
+                          ),
                         ),
                         const SizedBox(height: 5),
                         Row(
@@ -88,14 +90,16 @@ class _TreeAdoptListState extends State<TreeAdoptList> {
                               Icons.location_pin,
                               color: ColorManager.blue,
                             ),
-                            Text(
-                              widget.adoptList[index].location!,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2
-                                  ?.copyWith(
-                                    color: ColorManager.blue,
-                                  ),
+                            Expanded(
+                              child: Text(
+                                widget.adoptList[index].location!,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    ?.copyWith(
+                                      color: ColorManager.blue,
+                                    ),
+                              ),
                             ),
                           ],
                         ),

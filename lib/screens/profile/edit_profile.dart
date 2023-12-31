@@ -1,13 +1,16 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:bumibaik_app/common/common_widget.dart';
-import 'package:bumibaik_app/models/user_model.dart';
-import 'package:bumibaik_app/resources/color_manager.dart';
+import 'package:new_bumi_baik/common/common_widget.dart';
+import 'package:new_bumi_baik/models/user_model.dart';
+import 'package:new_bumi_baik/resources/color_manager.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:new_bumi_baik/services/user_service.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:intl/intl.dart';
 
 class EditProfile extends StatefulWidget {
   UserModel userModel;
@@ -18,15 +21,17 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  TextEditingController? nameController = TextEditingController();
-  TextEditingController? emailController = TextEditingController();
-  TextEditingController? phoneController = TextEditingController();
-  TextEditingController? addressController = TextEditingController();
-
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  late String selectedValue;
+  List<String> gender = ["None", "Female", "Male"];
   final ImagePicker _picker = ImagePicker();
   dynamic _pickImageError;
-
+  bool isLoading = false;
   XFile? _imageFile;
+  late DateTime selectedDate;
 
   void _setImageFileListFromFile(XFile? value) {
     _imageFile = value;
@@ -51,18 +56,44 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
+  void _showDatePicker() async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2025),
+    );
+
+    selectedDate = date ?? DateTime.parse(widget.userModel.birthDate);
+    setState(() {});
+  }
+
   @override
   void initState() {
     setDetails();
+    // widget.userModel = UserModel(
+    //     id: 1,
+    //     name: 'Derajat',
+    //     email: 'darkbludevil@gmail.com',
+    //     telp: '08887125515',
+    //     birthDate: '28 agustus 2020',
+    //     gender: 'laki - laki',
+    //     address: ' aslkdjalsdjlsakj',
+    //     photo: '',
+    //     type: '',
+    //     emailVerifiedAt: DateTime.now());
+
     super.initState();
   }
 
   setDetails() {
     setState(() {
-      nameController!.text = widget.userModel.name!;
-      emailController!.text = widget.userModel.email!;
-      addressController!.text = widget.userModel.address ?? "";
-      phoneController!.text = widget.userModel.telp ?? "";
+      nameController.text = widget.userModel.name ?? "";
+      emailController.text = widget.userModel.email ?? "";
+      addressController.text = widget.userModel.address ?? "";
+      phoneController.text = widget.userModel.telp ?? "";
+      selectedValue = widget.userModel.gender ?? gender.first;
+      selectedDate = DateTime.parse(widget.userModel.birthDate);
     });
   }
 
@@ -218,7 +249,7 @@ class _EditProfileState extends State<EditProfile> {
                                     borderRadius: BorderRadius.circular(10),
                                     child: FancyShimmerImage(
                                       boxFit: BoxFit.cover,
-                                      imageUrl: widget.userModel.photo!,
+                                      imageUrl: widget.userModel.photo ?? "",
                                       errorWidget: Image.network(
                                           'https://i0.wp.com/www.dobitaobyte.com.br/wp-content/uploads/2016/02/no_image.png?ssl=1'),
                                     ),
@@ -344,6 +375,120 @@ class _EditProfileState extends State<EditProfile> {
                       labelStyle: Theme.of(context).textTheme.bodyText2),
                 ),
               ),
+              SizedBox(height: 20, width: MediaQuery.of(context).size.width),
+              Text("Jenis Kelamin",
+                  style: Theme.of(context).textTheme.subtitle2),
+              SizedBox(height: 15, width: MediaQuery.of(context).size.width),
+              Container(
+                  height: 55,
+                  padding: const EdgeInsets.only(left: 24, top: 3),
+                  decoration: BoxDecoration(
+                    // borderRadius: BorderRadius.circular(15.0),
+                    border: Border.all(
+                        color: Colors.black,
+                        style: BorderStyle.solid,
+                        width: 0.70),
+                  ),
+                  // decoration: BoxDecoration(
+                  // ),
+                  child: DropdownButton<String?>(
+                    hint: const Text('Gender'),
+                    value: selectedValue,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedValue = value ?? "";
+                      });
+                    },
+                    underline: const SizedBox(),
+                    isExpanded: true,
+                    items: gender
+                        .map<DropdownMenuItem<String?>>(
+                          (e) => DropdownMenuItem(
+                            child: Text(
+                              e.toString(),
+                            ),
+                            value: e,
+                          ),
+                        )
+                        .toList(),
+                  )
+                  // print();),
+                  ),
+              SizedBox(height: 20, width: MediaQuery.of(context).size.width),
+              Text("Tanggal Lahir",
+                  style: Theme.of(context).textTheme.subtitle2),
+              SizedBox(height: 15, width: MediaQuery.of(context).size.width),
+              Container(
+                height: 55,
+                padding: const EdgeInsets.only(left: 9, top: 3),
+                decoration: BoxDecoration(
+                  // borderRadius: BorderRadius.circular(15.0),
+                  border: Border.all(
+                      color: Colors.black,
+                      style: BorderStyle.solid,
+                      width: 0.70),
+                ),
+                child: MaterialButton(
+                  onPressed: _showDatePicker,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // Icon(
+                      //   Icons.calendar_month,
+                      //   color: ColorManager.primary,
+                      // ),
+                      // SizedBox(
+                      //   width: 4,
+                      // ),
+                      Text(
+                        DateFormat('yyyy-MM-dd').format(selectedDate!),
+                        textAlign: TextAlign.start,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 50,
+                width: double.infinity,
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorManager.primary, // background
+                    foregroundColor: Colors.white, // foreground
+                  ),
+                  child: isLoading
+                      ? const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Text('SIMPAN'),
+                  onPressed: () async {
+                    await UserService().updateUserDetails(
+                      {
+                        "name": nameController.text,
+                        "email": emailController.text,
+                        "telp": phoneController.text,
+                        "birth_date":
+                            DateFormat('yyyy-MM-dd').format(selectedDate),
+                        "gender": selectedValue,
+                      },
+                    );
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                    }
+                    ;
+                    await UserService().getUserDetails();
+                    // print(test);
+                    print(selectedDate);
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -351,6 +496,68 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 }
+
+//   updateUser() async {
+//     Map<String, dynamic> data = {
+//       'name': nameController.text.trim(),
+//       'email': emailController.text.trim(),
+//       'telp': phoneController.text.trim(),
+//       'gender': selectedValue,
+//     };
+//     print(data["gender"]);
+//     try {
+//       AuthResponseModel? res = await AuthService().register(data);
+
+//       try {
+//         setState(() {
+//           globalAccessToken = res.accessToken!;
+//         });
+
+//         UserModel user = await UserService().getUserDetails();
+
+//         CommonMethod().saveUserLoginsDetails(
+//           user.id!,
+//           user.name!,
+//           user.email!,
+//           passwordController.text.trim(),
+//           res.accessToken!,
+//           true,
+//           user.gender!,
+//         );
+
+//         setState(() {
+//           isLoading = false;
+//         });
+
+//         Navigator.pushReplacement(
+//           context,
+//           MaterialPageRoute(
+//             builder: (context) => Calculate1(
+//               userModel: user,
+//             ),
+//           ),
+//         );
+//       } catch (e) {
+//         print(e);
+//         CommonDialogWidget.buildOkDialog(context, false, e.toString());
+
+//         setState(() {
+//           isLoading = false;
+//         });
+//       }
+//     } catch (e) {
+//       print(e);
+//       RegisterValidationModel er = e as RegisterValidationModel;
+//       CommonDialogWidget.buildOkDialog(context, false,
+//           "${er.email == null ? "" : er.email![0]}${er.telp == null ? "" : er.telp![0]}");
+//       //CommonDialogWidget.buildOkDialog(context, false, e.toString());
+
+//       setState(() {
+//         isLoading = false;
+//       });
+//     }
+//   }
+// }
 
 typedef OnPickImageCallback = void Function(
     double? maxWidth, double? maxHeight, int? quality);

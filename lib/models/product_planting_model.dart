@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:bumibaik_app/models/tree_model.dart';
+import 'package:new_bumi_baik/models/tree_model.dart';
 
 ProductPlantingModel productPlantModelFromJson(String str) =>
     ProductPlantingModel.fromJson(json.decode(str));

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:bumibaik_app/models/complete_user_model.dart';
-import 'package:bumibaik_app/models/auth_response_model.dart';
-import 'package:bumibaik_app/models/register_validation_model.dart';
+import 'package:new_bumi_baik/models/complete_user_model.dart';
+import 'package:new_bumi_baik/models/auth_response_model.dart';
+import 'package:new_bumi_baik/models/register_validation_model.dart';
 import 'package:http/http.dart' as http;
 
 import '../resources/app_constants.dart';
@@ -25,6 +25,8 @@ class AuthService {
           'name': data['name'],
           'email': data['email'],
           'telp': data['telp'],
+          'birth_date': data['birth_date'],
+          'gender': data['gender'],
           'password': data['password'],
           'password_confirm': data['password_confirm'],
         }),

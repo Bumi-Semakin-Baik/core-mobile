@@ -1,6 +1,6 @@
-import 'package:bumibaik_app/common/common_widget.dart';
-import 'package:bumibaik_app/screens/auth/register.dart';
-import 'package:bumibaik_app/services/user_service.dart';
+import 'package:new_bumi_baik/common/common_widget.dart';
+import 'package:new_bumi_baik/screens/auth/register.dart';
+import 'package:new_bumi_baik/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -246,6 +246,7 @@ class _LoginState extends State<Login> {
           passwordController.text.trim(),
           res.accessToken!,
           true,
+          user.gender!,
         );
 
         setState(() {

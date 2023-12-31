@@ -1,5 +1,5 @@
-import 'package:bumibaik_app/resources/color_manager.dart';
-import 'package:bumibaik_app/screens/scan_page.dart';
+import 'package:new_bumi_baik/resources/color_manager.dart';
+import 'package:new_bumi_baik/screens/scan_page.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';

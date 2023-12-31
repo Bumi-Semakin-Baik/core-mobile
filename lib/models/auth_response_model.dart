@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:bumibaik_app/models/user_model.dart';
+import 'package:new_bumi_baik/models/user_model.dart';
 
 AuthResponseModel registerResponseModelFromJson(String str) =>
     AuthResponseModel.fromJson(json.decode(str));

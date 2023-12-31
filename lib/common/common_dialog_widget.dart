@@ -1,4 +1,4 @@
-import 'package:bumibaik_app/resources/color_manager.dart';
+import 'package:new_bumi_baik/resources/color_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/auth/login.dart';

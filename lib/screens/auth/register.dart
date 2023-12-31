@@ -1,14 +1,14 @@
-import 'package:bumibaik_app/common/common_dialog_widget.dart';
-import 'package:bumibaik_app/common/common_method.dart';
-import 'package:bumibaik_app/models/auth_response_model.dart';
-import 'package:bumibaik_app/models/register_validation_model.dart';
-import 'package:bumibaik_app/resources/token.dart';
-import 'package:bumibaik_app/screens/auth/login.dart';
-import 'package:bumibaik_app/screens/calculate_carbon/calculate_1.dart';
-import 'package:bumibaik_app/services/auth_service.dart';
+import 'package:new_bumi_baik/common/common_dialog_widget.dart';
+import 'package:new_bumi_baik/common/common_method.dart';
+import 'package:new_bumi_baik/models/auth_response_model.dart';
+import 'package:new_bumi_baik/models/register_validation_model.dart';
+import 'package:new_bumi_baik/resources/token.dart';
+import 'package:new_bumi_baik/screens/auth/login.dart';
+import 'package:new_bumi_baik/screens/calculate_carbon/calculate_1.dart';
+import 'package:new_bumi_baik/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-
+import 'package:intl/intl.dart';
 import '../../models/user_model.dart';
 import '../../resources/color_manager.dart';
 import '../../services/user_service.dart';
@@ -28,6 +28,9 @@ class _DaftarState extends State<Register> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
+  late String selectedValue = gender.first;
+  List<String> gender = ["None", "Female", "Male"];
+  DateTime? selectedDate;
   bool _isObscure = true;
 
   final _formKey = GlobalKey<FormState>();
@@ -58,6 +61,15 @@ class _DaftarState extends State<Register> {
   ]);
 
   bool isLoading = false;
+  void _showDatePicker() async {
+    final date = await showDatePicker(
+        context: context,
+        initialDate: selectedDate ?? DateTime.now(),
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2025));
+    selectedDate = date;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,6 +143,41 @@ class _DaftarState extends State<Register> {
                             ),
                           ),
                         ),
+                        Container(
+                            margin: const EdgeInsets.all(12),
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(15.0),
+                              border: Border.all(
+                                  color: Colors.black,
+                                  style: BorderStyle.solid,
+                                  width: 0.70),
+                            ),
+                            // decoration: BoxDecoration(
+                            // ),
+                            child: DropdownButton<String?>(
+                              hint: const Text('Gender'),
+                              value: selectedValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedValue = value ?? "";
+                                });
+                              },
+                              underline: const SizedBox(),
+                              isExpanded: true,
+                              items: gender
+                                  .map<DropdownMenuItem<String?>>(
+                                    (e) => DropdownMenuItem(
+                                      child: Text(
+                                        e.toString(),
+                                      ),
+                                      value: e,
+                                    ),
+                                  )
+                                  .toList(),
+                            )
+                            // print();),
+                            ),
                         Container(
                           padding: const EdgeInsets.all(10),
                           child: TextFormField(
@@ -213,6 +260,9 @@ class _DaftarState extends State<Register> {
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         Container(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: TextFormField(
@@ -255,7 +305,48 @@ class _DaftarState extends State<Register> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 4),
+                        Container(
+                          margin: const EdgeInsets.all(12),
+                          // padding: const EdgeInsets.all(10),
+                          height: 50,
+                          width: double.infinity,
+                          // alignment: Alignment.topLeft,
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          //  padding: const EdgeInsets.all(10)
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              style: BorderStyle.solid,
+                              width: 0.70,
+                            ),
+                          ),
+                          child: MaterialButton(
+                            onPressed: _showDatePicker,
+                            child: Row(
+                              // mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.calendar_month,
+                                  color: ColorManager.primary,
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  selectedDate == null
+                                      ? "Pilih Tanggal Lahir"
+                                      : DateFormat('yyyy-MM-dd')
+                                          .format(selectedDate!),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
                         Container(
                           height: 50,
                           width: double.infinity,
@@ -281,6 +372,8 @@ class _DaftarState extends State<Register> {
                                 });
 
                                 registerUser();
+                                print(selectedValue);
+                                print(selectedDate);
                               }
                             },
                           ),
@@ -328,10 +421,12 @@ class _DaftarState extends State<Register> {
       'name': nameController.text.trim(),
       'email': emailController.text.trim(),
       'telp': phoneController.text.trim(),
+      'birth_date': DateFormat('yyyy-MM-dd').format(selectedDate!),
+      'gender': selectedValue,
       'password': passwordController.text.trim(),
       'password_confirm': confirmPasswordController.text.trim(),
     };
-
+    print(data["gender"]);
     try {
       AuthResponseModel? res = await AuthService().register(data);
 
@@ -349,6 +444,8 @@ class _DaftarState extends State<Register> {
           passwordController.text.trim(),
           res.accessToken!,
           true,
+          user.gender!,
+          // user.birthDate!
         );
 
         setState(() {

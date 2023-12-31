@@ -1,10 +1,10 @@
-import 'package:bumibaik_app/common/common_widget.dart';
-import 'package:bumibaik_app/models/news_model.dart';
-import 'package:bumibaik_app/models/product_adopt_model.dart';
-import 'package:bumibaik_app/models/project_model.dart';
-import 'package:bumibaik_app/resources/color_manager.dart';
-import 'package:bumibaik_app/screens/details/project_detail.dart';
-import 'package:bumibaik_app/screens/tree_planting/tree_planting_detail.dart';
+import 'package:new_bumi_baik/common/common_widget.dart';
+import 'package:new_bumi_baik/models/news_model.dart';
+import 'package:new_bumi_baik/models/product_adopt_model.dart';
+import 'package:new_bumi_baik/models/project_model.dart';
+import 'package:new_bumi_baik/resources/color_manager.dart';
+import 'package:new_bumi_baik/screens/details/project_detail.dart';
+import 'package:new_bumi_baik/screens/tree_planting/tree_planting_detail.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +40,8 @@ class _ProjectWidgetState extends State<ProjectWidget> {
 
   @override
   Widget build(BuildContext context) {
+    String imagePath= widget.projectModel!.photo!;
+
     return GestureDetector(
       onTap: () {
         CommonWidget().movePage(
@@ -62,9 +64,11 @@ class _ProjectWidgetState extends State<ProjectWidget> {
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10)),
-                child: FancyShimmerImage(
+                child:
+                // Image.asset('assets/images/spanduk_donasi.png'),
+                FancyShimmerImage(
                   boxFit: BoxFit.cover,
-                  imageUrl: "",
+                  imageUrl: imagePath,
                   errorWidget: Image.network(
                       'https://i0.wp.com/www.dobitaobyte.com.br/wp-content/uploads/2016/02/no_image.png?ssl=1'),
                 ),

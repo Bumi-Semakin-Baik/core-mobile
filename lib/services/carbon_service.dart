@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:bumibaik_app/models/carbon_and_tree_model.dart';
-import 'package:bumibaik_app/models/carbon_calculation_result_model.dart';
-import 'package:bumibaik_app/models/carbon_calculator_type_model.dart';
-import 'package:bumibaik_app/models/complete_user_model.dart';
-import 'package:bumibaik_app/models/auth_response_model.dart';
-import 'package:bumibaik_app/resources/token.dart';
+import 'package:new_bumi_baik/models/carbon_and_tree_model.dart';
+import 'package:new_bumi_baik/models/carbon_calculation_result_model.dart';
+import 'package:new_bumi_baik/models/carbon_calculator_type_model.dart';
+import 'package:new_bumi_baik/models/complete_user_model.dart';
+import 'package:new_bumi_baik/models/auth_response_model.dart';
+import 'package:new_bumi_baik/resources/token.dart';
 import 'package:http/http.dart' as http;
 
 import '../resources/app_constants.dart';

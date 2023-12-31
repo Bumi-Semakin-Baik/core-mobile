@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:bumibaik_app/models/news_model.dart';
-import 'package:bumibaik_app/models/product_adopt_model.dart';
-import 'package:bumibaik_app/models/product_planting_model.dart';
-import 'package:bumibaik_app/resources/app_constants.dart';
+import 'package:new_bumi_baik/models/news_model.dart';
+import 'package:new_bumi_baik/models/product_adopt_model.dart';
+import 'package:new_bumi_baik/models/product_planting_model.dart';
+import 'package:new_bumi_baik/resources/app_constants.dart';
 import 'package:http/http.dart' as http;
 
 import '../resources/token.dart';

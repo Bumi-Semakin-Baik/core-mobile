@@ -1,11 +1,11 @@
-import 'package:bumibaik_app/common/common_dialog_widget.dart';
-import 'package:bumibaik_app/common/common_shimmer_widget.dart';
-import 'package:bumibaik_app/common/common_widget.dart';
-import 'package:bumibaik_app/models/product_adopt_model.dart';
-import 'package:bumibaik_app/models/transaction_model.dart';
-import 'package:bumibaik_app/services/midtrans_service.dart';
-import 'package:bumibaik_app/services/product_service.dart';
-import 'package:bumibaik_app/services/transaction_service.dart';
+import 'package:new_bumi_baik/common/common_dialog_widget.dart';
+import 'package:new_bumi_baik/common/common_shimmer_widget.dart';
+import 'package:new_bumi_baik/common/common_widget.dart';
+import 'package:new_bumi_baik/models/product_adopt_model.dart';
+import 'package:new_bumi_baik/models/transaction_model.dart';
+import 'package:new_bumi_baik/services/midtrans_service.dart';
+import 'package:new_bumi_baik/services/product_service.dart';
+import 'package:new_bumi_baik/services/transaction_service.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
@@ -167,7 +167,7 @@ class _TreeAdoptDetailState extends State<TreeAdoptDetail> {
                               widget.productAdoptModel.name!,
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline5
+                                  .headlineSmall
                                   ?.copyWith(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -178,7 +178,7 @@ class _TreeAdoptDetailState extends State<TreeAdoptDetail> {
                               "Detail",
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline5
+                                  .headlineSmall
                                   ?.copyWith(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -194,7 +194,7 @@ class _TreeAdoptDetailState extends State<TreeAdoptDetail> {
                               "Lokasi",
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline5
+                                  .headlineSmall
                                   ?.copyWith(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -210,7 +210,7 @@ class _TreeAdoptDetailState extends State<TreeAdoptDetail> {
                               "Sisa Kuota",
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline5
+                                  .headlineSmall
                                   ?.copyWith(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -226,7 +226,7 @@ class _TreeAdoptDetailState extends State<TreeAdoptDetail> {
                               "Pilih Nominal Pembelian",
                               style: Theme.of(context)
                                   .textTheme
-                                  .headline5
+                                  .headlineSmall
                                   ?.copyWith(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,

@@ -1,9 +1,9 @@
-import 'package:bumibaik_app/common/common_widget.dart';
-import 'package:bumibaik_app/models/product_adopt_model.dart';
-import 'package:bumibaik_app/models/product_planting_model.dart';
-import 'package:bumibaik_app/screens/tree_adopt/tree_adopt_detail.dart';
-import 'package:bumibaik_app/screens/tree_planting/tree_planting_detail.dart';
-import 'package:bumibaik_app/screens/widgets/product_widget.dart';
+import 'package:new_bumi_baik/common/common_widget.dart';
+import 'package:new_bumi_baik/models/product_adopt_model.dart';
+import 'package:new_bumi_baik/models/product_planting_model.dart';
+import 'package:new_bumi_baik/screens/tree_adopt/tree_adopt_detail.dart';
+import 'package:new_bumi_baik/screens/tree_planting/tree_planting_detail.dart';
+import 'package:new_bumi_baik/screens/widgets/product_widget.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';

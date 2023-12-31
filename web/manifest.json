@@ -1,6 +1,6 @@
 {
-    "name": "bumibaik_app",
-    "short_name": "bumibaik_app",
+    "name": "new_bumi_baik",
+    "short_name": "new_bumi_baik",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

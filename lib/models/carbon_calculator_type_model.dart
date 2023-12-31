@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:bumibaik_app/models/carbon_calculator_type_item_model.dart';
+import 'package:new_bumi_baik/models/carbon_calculator_type_item_model.dart';
 
 CarbonCalculatorTypeModel carbonCalculatorTypeModelFromJson(String str) =>
     CarbonCalculatorTypeModel.fromJson(json.decode(str));

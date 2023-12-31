@@ -1,12 +1,12 @@
 import 'dart:math';
 
-import 'package:bumibaik_app/common/common_dialog_widget.dart';
-import 'package:bumibaik_app/models/carbon_calculation_result_model.dart';
-import 'package:bumibaik_app/models/carbon_calculator_type_model.dart';
-import 'package:bumibaik_app/models/user_model.dart';
-import 'package:bumibaik_app/resources/color_manager.dart';
-import 'package:bumibaik_app/screens/calculate_carbon/calculate_2.dart';
-import 'package:bumibaik_app/services/carbon_service.dart';
+import 'package:new_bumi_baik/common/common_dialog_widget.dart';
+import 'package:new_bumi_baik/models/carbon_calculation_result_model.dart';
+import 'package:new_bumi_baik/models/carbon_calculator_type_model.dart';
+import 'package:new_bumi_baik/models/user_model.dart';
+import 'package:new_bumi_baik/resources/color_manager.dart';
+import 'package:new_bumi_baik/screens/calculate_carbon/calculate_2.dart';
+import 'package:new_bumi_baik/services/carbon_service.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:shared_preferences/shared_preferences.dart';

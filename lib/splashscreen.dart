@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:bumibaik_app/models/carbon_model.dart';
-import 'package:bumibaik_app/resources/token.dart';
-import 'package:bumibaik_app/screens/auth/login.dart';
-import 'package:bumibaik_app/screens/menu/dashboard.dart';
-import 'package:bumibaik_app/services/auth_service.dart';
-import 'package:bumibaik_app/services/carbon_service.dart';
-import 'package:bumibaik_app/services/user_service.dart';
+import 'package:new_bumi_baik/models/carbon_model.dart';
+import 'package:new_bumi_baik/resources/token.dart';
+import 'package:new_bumi_baik/screens/auth/login.dart';
+import 'package:new_bumi_baik/screens/menu/dashboard.dart';
+import 'package:new_bumi_baik/services/auth_service.dart';
+import 'package:new_bumi_baik/services/carbon_service.dart';
+import 'package:new_bumi_baik/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -97,6 +97,7 @@ class _SplashscreenState extends State<Splashscreen> {
           password!,
           res.accessToken!,
           true,
+          user.gender!,
         );
 
         await getCarbonData();

@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:bumibaik_app/common/common_dialog_widget.dart';
-import 'package:bumibaik_app/common/common_shimmer_widget.dart';
-import 'package:bumibaik_app/models/project_detail_model.dart';
-import 'package:bumibaik_app/models/tree_scan_detail_model.dart';
-import 'package:bumibaik_app/services/project_service.dart';
-import 'package:bumibaik_app/services/tree_service.dart';
+import 'package:new_bumi_baik/common/common_dialog_widget.dart';
+import 'package:new_bumi_baik/common/common_shimmer_widget.dart';
+import 'package:new_bumi_baik/models/project_detail_model.dart';
+import 'package:new_bumi_baik/models/tree_scan_detail_model.dart';
+import 'package:new_bumi_baik/services/project_service.dart';
+import 'package:new_bumi_baik/services/tree_service.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -43,6 +43,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
 
   @override
   Widget build(BuildContext context) {
+    String imagePath1 = "${projectDetailModel!.photo!}";
     return Scaffold(
       appBar: CommonWidget.buildCommonAppbar(
         context,
@@ -68,9 +69,10 @@ class _ProjectDetailState extends State<ProjectDetail> {
                     //     'assets/trees/${treeScanDetail!.images![0]}',
                     //   ),
                     // ),
-                    child: FancyShimmerImage(
+                    child:
+                    FancyShimmerImage(
                       boxFit: BoxFit.cover,
-                      imageUrl: "",
+                      imageUrl: imagePath1,
                       errorWidget: Image.network(
                           'https://i0.wp.com/www.dobitaobyte.com.br/wp-content/uploads/2016/02/no_image.png?ssl=1'),
                     ),
@@ -83,26 +85,12 @@ class _ProjectDetailState extends State<ProjectDetail> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          projectDetailModel!.name!,
+                          '${projectDetailModel!.name!}',
                           style:
                               Theme.of(context).textTheme.headline5?.copyWith(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                   ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          "Detail",
-                          style:
-                              Theme.of(context).textTheme.headline5?.copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17,
-                                  ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          "${projectDetailModel!.name!} - ${projectDetailModel!.description!}",
                         ),
                         const SizedBox(height: 20),
                         Text(
@@ -134,6 +122,19 @@ class _ProjectDetailState extends State<ProjectDetail> {
                           projectDetailModel!.address!,
                         ),
                         const SizedBox(height: 20),
+                        Text(
+                          "Deskripsi",
+                          style:
+                              Theme.of(context).textTheme.headline5?.copyWith(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          '${projectDetailModel!.description!}',
+                        ),
                       ],
                     ),
                   ),

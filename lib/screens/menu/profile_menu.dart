@@ -1,13 +1,13 @@
-import 'package:bumibaik_app/common/common_method.dart';
-import 'package:bumibaik_app/common/common_widget.dart';
-import 'package:bumibaik_app/models/user_model.dart';
-import 'package:bumibaik_app/screens/auth/login.dart';
-import 'package:bumibaik_app/screens/daftar_transaksi.dart';
-import 'package:bumibaik_app/screens/profile/edit_password.dart';
-import 'package:bumibaik_app/screens/profile/edit_profile.dart';
-import 'package:bumibaik_app/screens/profile/tentang/panduan.dart';
-import 'package:bumibaik_app/screens/profile/tentang/pusat_bantuan.dart';
-import 'package:bumibaik_app/screens/profile/tentang/tentang_bb.dart';
+import 'package:new_bumi_baik/common/common_method.dart';
+import 'package:new_bumi_baik/common/common_widget.dart';
+import 'package:new_bumi_baik/models/user_model.dart';
+import 'package:new_bumi_baik/screens/auth/login.dart';
+import 'package:new_bumi_baik/screens/daftar_transaksi.dart';
+import 'package:new_bumi_baik/screens/profile/edit_password.dart';
+import 'package:new_bumi_baik/screens/profile/edit_profile.dart';
+import 'package:new_bumi_baik/screens/profile/tentang/panduan.dart';
+import 'package:new_bumi_baik/screens/profile/tentang/pusat_bantuan.dart';
+import 'package:new_bumi_baik/screens/profile/tentang/tentang_bb.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -29,7 +29,7 @@ class _ProfileMenuState extends State<ProfileMenu> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        toolbarHeight: MediaQuery.of(context).size.height * 0.11,
+        toolbarHeight: MediaQuery.of(context).size.height * 0.15,
         backgroundColor: Colors.white,
         flexibleSpace: SafeArea(
           child: Padding(
@@ -76,7 +76,8 @@ class _ProfileMenuState extends State<ProfileMenu> {
           const Padding(
             padding: EdgeInsets.only(left: 20),
             child: Text(
-              'Profil',
+              '',
+              // 'Profil',
               style: TextStyle(
                 fontSize: 23,
                 fontWeight: FontWeight.bold,
@@ -119,6 +120,7 @@ class _ProfileMenuState extends State<ProfileMenu> {
                     ),
                     child: const Text('Edit Profil'),
                     onPressed: () async {
+                      print(widget.userModel.photo);
                       CommonWidget().movePage(
                           context,
                           EditProfile(
@@ -288,7 +290,8 @@ class _ProfileMenuState extends State<ProfileMenu> {
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: ElevatedButton(
               onPressed: () {
-                CommonMethod().saveUserLoginsDetails(0, "", "", "", "", false);
+                CommonMethod()
+                    .saveUserLoginsDetails(0, "", "", "", "", false, "");
 
                 Navigator.of(context, rootNavigator: true).pop();
 

@@ -20,6 +20,7 @@ class ProjectDetailModel {
     this.plantingDate,
     this.address,
     this.treeTotal,
+    this.photo,
   });
 
   int? id;
@@ -30,6 +31,7 @@ class ProjectDetailModel {
   DateTime? plantingDate;
   String? address;
   int? treeTotal;
+  String? photo;
 
   factory ProjectDetailModel.fromJson(Map<String, dynamic> json) =>
       ProjectDetailModel(
@@ -43,6 +45,7 @@ class ProjectDetailModel {
             : DateTime.parse(json["planting_date"]),
         address: json["address"],
         treeTotal: json["tree_total"],
+        photo: json["photo"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,5 +58,6 @@ class ProjectDetailModel {
             "${plantingDate!.year.toString().padLeft(4, '0')}-${plantingDate!.month.toString().padLeft(2, '0')}-${plantingDate!.day.toString().padLeft(2, '0')}",
         "address": address,
         "tree_total": treeTotal,
+        "photo": photo,
       };
 }

@@ -1,4 +1,4 @@
-import 'package:bumibaik_app/models/transaction_item_model.dart';
+import 'package:new_bumi_baik/models/transaction_item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

@@ -1,4 +1,4 @@
-import 'package:bumibaik_app/common/common_widget.dart';
+import 'package:new_bumi_baik/common/common_widget.dart';
 import 'package:flutter/material.dart';
 
 class TentangBb extends StatefulWidget {

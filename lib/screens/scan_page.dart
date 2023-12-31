@@ -1,8 +1,8 @@
 // import 'dart:developer';
 // import 'dart:io';
 
-// import 'package:bumibaik_app/common/common_widget.dart';
-// import 'package:bumibaik_app/resources/color_manager.dart';
+// import 'package:new_bumi_baik/common/common_widget.dart';
+// import 'package:new_bumi_baik/resources/color_manager.dart';
 // import 'package:flutter/material.dart';
 // import 'package:mobile_scanner/mobile_scanner.dart';
 // //import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -231,7 +231,7 @@
 //   }
 // }
 
-import 'package:bumibaik_app/screens/details/tree_scan_detail.dart';
+import 'package:new_bumi_baik/screens/details/tree_scan_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 

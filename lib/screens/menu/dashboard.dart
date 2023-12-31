@@ -1,9 +1,9 @@
-import 'package:bumibaik_app/models/user_model.dart';
-import 'package:bumibaik_app/screens/menu/carbon_menu.dart';
-import 'package:bumibaik_app/screens/menu/home_menu.dart';
-import 'package:bumibaik_app/screens/menu/news_menu.dart';
-import 'package:bumibaik_app/screens/menu/profile_menu.dart';
-import 'package:bumibaik_app/screens/menu/scan_menu.dart';
+import 'package:new_bumi_baik/models/user_model.dart';
+import 'package:new_bumi_baik/screens/menu/carbon_menu.dart';
+import 'package:new_bumi_baik/screens/menu/home_menu.dart';
+import 'package:new_bumi_baik/screens/menu/news_menu.dart';
+import 'package:new_bumi_baik/screens/menu/profile_menu.dart';
+import 'package:new_bumi_baik/screens/menu/scan_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -34,9 +34,9 @@ class _DashboardState extends State<Dashboard> {
       HomeMenu(userModel: widget.userModel),
       NewsMenu(),
       ScanMenu(),
-      CarbonMenu(
-        userModel: widget.userModel,
-      ),
+      const CarbonMenu(
+          //  userModel: widget.userModel,
+          ),
       ProfileMenu(userModel: widget.userModel),
     ];
   }
